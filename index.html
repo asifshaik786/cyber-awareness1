@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CyberSafe Kadapa — National Digital Safety Awareness Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SKIP LINK -->
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span data-en="🇮🇳 Community Service Project · KSRM College of Engineering, Kadapa" data-te="🇮🇳 కమ్యూనిటీ సర్వీస్ ప్రాజెక్ట్ · KSRM కళాశాల, కడప">🇮🇳 Community Service Project · KSRM College of Engineering, Kadapa</span>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <a href="index.html" class="nav-brand">
+    <span class="brand-icon">🛡️</span>
+    <span class="brand-text">
+      <strong data-en="CyberSafe Kadapa" data-te="సైబర్‌సేఫ్ కడప">CyberSafe Kadapa</strong>
+      <small data-en="Digital Safety Awareness Portal" data-te="డిజిటల్ భద్రత అవగాహన పోర్టల్">Digital Safety Awareness Portal</small>
+    </span>
+  </a>
+  <nav class="nav-links" id="navLinks">
+    <a href="index.html" class="active" data-en="Home" data-te="హోమ్">Home</a>
+    <a href="awareness.html" data-en="Common Scams" data-te="సాధారణ మోసాలు">Common Scams</a>
+    <a href="#simulator" data-en="Scam Simulator" data-te="స్కామ్ సిమ్యులేటర్">Scam Simulator</a>
+    <a href="#resources" data-en="Resources" data-te="వనరులు">Resources</a>
+    <a href="#helpline" data-en="Get Help" data-te="సహాయం పొందండి">Get Help</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">🌐 తెలుగు</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow" data-en="GOVERNMENT-STYLE AWARENESS INITIATIVE" data-te="ప్రభుత్వ తరహా అవగాహన కార్యక్రమం">GOVERNMENT-STYLE AWARENESS INITIATIVE</span>
+        <h1 data-en="Protect Your Family from Online Scams" data-te="ఆన్‌లైన్ మోసాల నుండి మీ కుటుంబాన్ని రక్షించండి">Protect Your Family from Online Scams</h1>
+        <p class="hero-sub" data-en="Learn how to identify cyber fraud, protect your money, and stay safe in the digital world — explained simply for every member of the family." data-te="సైబర్ మోసాన్ని గుర్తించడం, మీ డబ్బును రక్షించుకోవడం మరియు డిజిటల్ ప్రపంచంలో సురక్షితంగా ఉండటం నేర్చుకోండి — కుటుంబంలోని ప్రతి సభ్యునికి సరళంగా వివరించబడింది.">Learn how to identify cyber fraud, protect your money, and stay safe in the digital world — explained simply for every member of the family.</p>
+        <div class="hero-ctas">
+          <a href="awareness.html" class="btn btn-primary" data-en="Learn About Scams" data-te="మోసాల గురించి తెలుసుకోండి">Learn About Scams</a>
+          <a href="#simulator" class="btn btn-outline" data-en="Try Scam Simulator" data-te="స్కామ్ సిమ్యులేటర్ ప్రయత్నించండి">Try Scam Simulator</a>
+        </div>
+        <div class="hero-trust">
+          <span>✅ <span data-en="Verified information" data-te="ధృవీకరించబడిన సమాచారం">Verified information</span></span>
+          <span>✅ <span data-en="Telugu &amp; English" data-te="తెలుగు &amp; ఇంగ్లీష్">Telugu &amp; English</span></span>
+          <span>✅ <span data-en="Free for everyone" data-te="అందరికీ ఉచితం">Free for everyone</span></span>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 420 380" class="family-illustration">
+          <!-- shield backdrop -->
+          <circle cx="210" cy="180" r="160" fill="#EAF4FF"/>
+          <path d="M210 40 L300 75 V165 C300 230 262 278 210 300 C158 278 120 230 120 165 V75 Z" fill="#4DA8FF" opacity="0.18"/>
+          <path d="M210 60 L282 88 V162 C282 216 250 256 210 276 C170 256 138 216 138 162 V88 Z" fill="none" stroke="#0A2540" stroke-width="3"/>
+          <path d="M186 168 L202 184 L236 146" fill="none" stroke="#16A34A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- parent figure -->
+          <circle cx="150" cy="290" r="22" fill="#0A2540"/>
+          <rect x="128" y="312" width="44" height="56" rx="14" fill="#4DA8FF"/>
+          <rect x="138" y="330" width="24" height="32" rx="4" fill="#FFFFFF" opacity="0.85"/>
+          <!-- child figure -->
+          <circle cx="225" cy="305" r="16" fill="#0A2540"/>
+          <rect x="208" y="320" width="34" height="44" rx="11" fill="#F59E0B"/>
+          <rect x="216" y="334" width="18" height="22" rx="3" fill="#FFFFFF" opacity="0.85"/>
+          <!-- second parent -->
+          <circle cx="285" cy="292" r="20" fill="#0A2540"/>
+          <rect x="265" y="312" width="40" height="54" rx="13" fill="#16A34A"/>
+          <rect x="274" y="328" width="22" height="30" rx="4" fill="#FFFFFF" opacity="0.85"/>
+          <!-- floating security icons -->
+          <g class="float-icon a">
+            <circle cx="70" cy="100" r="26" fill="#FFFFFF" stroke="#4DA8FF" stroke-width="2"/>
+            <text x="70" y="108" text-anchor="middle" font-size="22">🔒</text>
+          </g>
+          <g class="float-icon b">
+            <circle cx="360" cy="120" r="24" fill="#FFFFFF" stroke="#16A34A" stroke-width="2"/>
+            <text x="360" y="128" text-anchor="middle" font-size="20">✅</text>
+          </g>
+          <g class="float-icon c">
+            <circle cx="350" cy="240" r="22" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
+            <text x="350" y="248" text-anchor="middle" font-size="18">📱</text>
+          </g>
+          <g class="float-icon d">
+            <circle cx="60" cy="250" r="20" fill="#FFFFFF" stroke="#0A2540" stroke-width="2"/>
+            <text x="60" y="257" text-anchor="middle" font-size="16">🛡️</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section class="section section-light reveal">
+    <p class="section-eyebrow" data-en="WHY THIS MATTERS" data-te="ఇది ఎందుకు ముఖ్యం">WHY THIS MATTERS</p>
+    <h2 class="section-title" data-en="Cyber Fraud Is Rising Fast in India" data-te="భారతదేశంలో సైబర్ మోసం వేగంగా పెరుగుతోంది">Cyber Fraud Is Rising Fast in India</h2>
+    <p class="section-desc" data-en="As more rural families get their first smartphone, scammers are specifically targeting first-time internet users. A little awareness prevents almost every common scam." data-te="మరిన్ని గ్రామీణ కుటుంబాలు తమ మొదటి స్మార్ట్‌ఫోన్ పొందడంతో, స్కామర్లు మొదటిసారి ఇంటర్నెట్ వాడే వారిని ప్రత్యేకంగా లక్ష్యంగా చేసుకుంటున్నారు. కొంచెం అవగాహన దాదాపు అన్ని సాధారణ మోసాలను నివారిస్తుంది.">As more rural families get their first smartphone, scammers are specifically targeting first-time internet users. A little awareness prevents almost every common scam.</p>
+
+    <div class="info-grid">
+      <div class="info-card reveal-item">
+        <div class="info-icon icon-danger">📈</div>
+        <div class="info-num" data-target="22.68" data-suffix=" Lakh+">0</div>
+        <p data-en="Cybercrime complaints filed in India in 2024" data-te="2024లో భారతదేశంలో దాఖలైన సైబర్ క్రైమ్ ఫిర్యాదులు">Cybercrime complaints filed in India in 2024</p>
+      </div>
+      <div class="info-card reveal-item">
+        <div class="info-icon icon-warning">💸</div>
+        <div class="info-num" data-target="22845" data-suffix=" Cr">0</div>
+        <p data-en="Lost to cyber fraud in 2024 (₹)" data-te="2024లో సైబర్ మోసంలో పోయిన మొత్తం (₹)">Lost to cyber fraud in 2024 (₹)</p>
+      </div>
+      <div class="info-card reveal-item">
+        <div class="info-icon icon-info">🆕</div>
+        <div class="info-num" data-target="60" data-suffix="%">0</div>
+        <p data-en="Victims were first-time digital payment users" data-te="మొదటిసారి డిజిటల్ చెల్లింపు వాడిన వారు బాధితులయ్యారు">Victims were first-time digital payment users</p>
+      </div>
+      <div class="info-card reveal-item">
+        <div class="info-icon icon-success">🛡️</div>
+        <div class="info-num" data-target="100" data-suffix="%">0</div>
+        <p data-en="Preventable with basic cyber awareness" data-te="ప్రాథమిక సైబర్ అవగాహనతో నివారించగలిగేది">Preventable with basic cyber awareness</p>
+      </div>
+    </div>
+    <p class="source-note" data-en="Source: Press Information Bureau, Government of India · National Cybercrime Reporting Portal, 2024" data-te="మూలం: పత్రికా సమాచార కార్యాలయం, భారత ప్రభుత్వం · 2024">Source: Press Information Bureau, Government of India · National Cybercrime Reporting Portal, 2024</p>
+  </section>
+
+  <!-- COMMON SCAMS PREVIEW -->
+  <section class="section reveal">
+    <p class="section-eyebrow" data-en="KNOW THE THREATS" data-te="ముప్పులు తెలుసుకోండి">KNOW THE THREATS</p>
+    <h2 class="section-title" data-en="Common Online Scams" data-te="సాధారణ ఆన్‌లైన్ మోసాలు">Common Online Scams</h2>
+    <p class="section-desc" data-en="Six scams responsible for most of the financial fraud affecting rural families today." data-te="నేడు గ్రామీణ కుటుంబాలను ప్రభావితం చేసే ఆర్థిక మోసాలలో ఎక్కువ భాగానికి కారణమైన ఆరు మోసాలు.">Six scams responsible for most of the financial fraud affecting rural families today.</p>
+
+    <div class="scam-grid">
+      <a href="awareness.html#otp" class="scam-card reveal-item">
+        <div class="scam-icon">📞</div>
+        <h3 data-en="OTP Fraud" data-te="OTP మోసం">OTP Fraud</h3>
+        <span class="te-label">OTP మోసం</span>
+        <p data-en="Fake bank calls trick you into sharing your one-time password." data-te="నకిలీ బ్యాంక్ కాల్స్ మిమ్మల్ని OTP పంచుకునేలా మోసం చేస్తాయి.">Fake bank calls trick you into sharing your one-time password.</p>
+      </a>
+      <a href="awareness.html#upi" class="scam-card reveal-item">
+        <div class="scam-icon">💳</div>
+        <h3 data-en="UPI Fraud" data-te="UPI మోసం">UPI Fraud</h3>
+        <span class="te-label">UPI మోసం</span>
+        <p data-en="Fake payment requests that actually withdraw money from your account." data-te="నిజానికి మీ ఖాతా నుండి డబ్బు తీసుకునే నకిలీ చెల్లింపు అభ్యర్థనలు.">Fake payment requests that actually withdraw money from your account.</p>
+      </a>
+      <a href="awareness.html#jobs" class="scam-card reveal-item">
+        <div class="scam-icon">💼</div>
+        <h3 data-en="Fake Job Scams" data-te="నకిలీ ఉద్యోగ మోసాలు">Fake Job Scams</h3>
+        <span class="te-label">నకిలీ ఉద్యోగ మోసాలు</span>
+        <p data-en="High-paying work-from-home offers that ask for a fee upfront." data-te="ముందుగా ఫీజు అడిగే అధిక వేతన వర్క్ ఫ్రమ్ హోమ్ ఆఫర్లు.">High-paying work-from-home offers that ask for a fee upfront.</p>
+      </a>
+      <a href="awareness.html#whatsapp" class="scam-card reveal-item">
+        <div class="scam-icon">💬</div>
+        <h3 data-en="WhatsApp Scams" data-te="WhatsApp మోసాలు">WhatsApp Scams</h3>
+        <span class="te-label">WhatsApp మోసాలు</span>
+        <p data-en="Messages from unknown numbers pretending to be a relative in trouble." data-te="ఇబ్బందిలో ఉన్న బంధువుగా నటిస్తూ తెలియని నంబర్ల నుండి మెసేజ్‌లు.">Messages from unknown numbers pretending to be a relative in trouble.</p>
+      </a>
+      <a href="awareness.html#loan" class="scam-card reveal-item">
+        <div class="scam-icon">📲</div>
+        <h3 data-en="Fake Loan Apps" data-te="నకిలీ లోన్ యాప్‌లు">Fake Loan Apps</h3>
+        <span class="te-label">నకిలీ లోన్ యాప్‌లు</span>
+        <p data-en="Illegal apps that steal your data and harass your contacts for repayment." data-te="మీ డేటాను దొంగిలించి, తిరిగి చెల్లింపు కోసం మీ పరిచయాలను వేధించే చట్టవిరుద్ధ యాప్‌లు.">Illegal apps that steal your data and harass your contacts for repayment.</p>
+      </a>
+      <a href="awareness.html#social" class="scam-card reveal-item">
+        <div class="scam-icon">📸</div>
+        <h3 data-en="Social Media Fraud" data-te="సోషల్ మీడియా మోసం">Social Media Fraud</h3>
+        <span class="te-label">సోషల్ మీడియా మోసం</span>
+        <p data-en="Fake profiles that build trust, then ask for photos or money." data-te="నమ్మకాన్ని పెంచి, తర్వాత ఫోటోలు లేదా డబ్బు అడిగే నకిలీ ప్రొఫైల్స్.">Fake profiles that build trust, then ask for photos or money.</p>
+      </a>
+    </div>
+    <div class="center-cta">
+      <a href="awareness.html" class="btn btn-primary" data-en="See All Scams with Real Examples →" data-te="నిజమైన ఉదాహరణలతో అన్ని మోసాలు చూడండి →">See All Scams with Real Examples →</a>
+    </div>
+  </section>
+
+  <!-- HOW SCAMMERS TRICK PEOPLE -->
+  <section class="section section-light reveal">
+    <p class="section-eyebrow" data-en="THE PATTERN" data-te="నమూనా">THE PATTERN</p>
+    <h2 class="section-title" data-en="How Scammers Trick People" data-te="స్కామర్లు ప్రజలను ఎలా మోసం చేస్తారు">How Scammers Trick People</h2>
+    <p class="section-desc" data-en="Almost every scam — phone, WhatsApp, or social media — follows the exact same four steps." data-te="దాదాపు ప్రతి మోసం — ఫోన్, WhatsApp లేదా సోషల్ మీడియా — ఇదే నాలుగు దశలను అనుసరిస్తుంది.">Almost every scam — phone, WhatsApp, or social media — follows the exact same four steps.</p>
+
+    <div class="flow-chart">
+      <div class="flow-step reveal-item">
+        <div class="flow-num">1</div>
+        <div class="flow-icon">📩</div>
+        <h4 data-en="Message or Call" data-te="మెసేజ్ లేదా కాల్">Message or Call</h4>
+        <p data-en="An unexpected call, SMS, or message arrives — often urgent-sounding." data-te="ఊహించని కాల్, SMS లేదా మెసేజ్ వస్తుంది — తరచుగా అత్యవసరంగా అనిపిస్తుంది.">An unexpected call, SMS, or message arrives — often urgent-sounding.</p>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step reveal-item">
+        <div class="flow-num">2</div>
+        <div class="flow-icon">🤝</div>
+        <h4 data-en="Gain Trust" data-te="నమ్మకం పొందడం">Gain Trust</h4>
+        <p data-en="They claim to be your bank, a relative, or an employer to sound legitimate." data-te="వారు చట్టబద్ధంగా అనిపించడానికి మీ బ్యాంక్, బంధువు లేదా యజమానిగా చెప్పుకుంటారు.">They claim to be your bank, a relative, or an employer to sound legitimate.</p>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step reveal-item">
+        <div class="flow-num">3</div>
+        <div class="flow-icon">🗂️</div>
+        <h4 data-en="Collect Information" data-te="సమాచారం సేకరించడం">Collect Information</h4>
+        <p data-en="They ask for OTP, PIN, bank details, or a small advance payment." data-te="వారు OTP, PIN, బ్యాంక్ వివరాలు లేదా చిన్న అడ్వాన్స్ చెల్లింపు అడుగుతారు.">They ask for OTP, PIN, bank details, or a small advance payment.</p>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">→</div>
+      <div class="flow-step reveal-item flow-final">
+        <div class="flow-num">4</div>
+        <div class="flow-icon">⚠️</div>
+        <h4 data-en="Steal Money" data-te="డబ్బు దొంగిలించడం">Steal Money</h4>
+        <p data-en="Money is withdrawn or transferred — usually within minutes." data-te="డబ్బు తీసుకోబడుతుంది లేదా బదిలీ చేయబడుతుంది — సాధారణంగా నిమిషాల్లో.">Money is withdrawn or transferred — usually within minutes.</p>
+      </div>
+    </div>
+    <div class="flow-tip">
+      💡 <span data-en="Breaking the chain at ANY step stops the scam. The easiest place to break it: never share OTP, PIN, or pay any advance fee." data-te="ఏ దశలోనైనా గొలుసును విచ్ఛిన్నం చేయడం మోసాన్ని ఆపుతుంది. విచ్ఛిన్నం చేయడానికి సులభమైన ప్రదేశం: OTP, PIN పంచుకోకండి లేదా అడ్వాన్స్ ఫీజు చెల్లించకండి.">Breaking the chain at ANY step stops the scam. The easiest place to break it: never share OTP, PIN, or pay any advance fee.</span>
+    </div>
+  </section>
+
+  <!-- SCAM SIMULATOR -->
+  <section class="section reveal" id="simulator">
+    <p class="section-eyebrow" data-en="PRACTICE SAFELY" data-te="సురక్షితంగా అభ్యసించండి">PRACTICE SAFELY</p>
+    <h2 class="section-title" data-en="Interactive Scam Simulator" data-te="ఇంటరాక్టివ్ స్కామ్ సిమ్యులేటర్">Interactive Scam Simulator</h2>
+    <p class="section-desc" data-en="Choose a scenario, make a decision, and learn instantly whether it was safe." data-te="ఒక దృశ్యం ఎంచుకోండి, నిర్ణయం తీసుకోండి, అది సురక్షితమో కాదో వెంటనే తెలుసుకోండి.">Choose a scenario, make a decision, and learn instantly whether it was safe.</p>
+
+    <div class="sim-card">
+      <div class="sim-tabs">
+        <button class="sim-tab active" onclick="loadScenario('otp',this)" data-en="Fake OTP Call" data-te="నకిలీ OTP కాల్">Fake OTP Call</button>
+        <button class="sim-tab" onclick="loadScenario('upi',this)" data-en="UPI Request Scam" data-te="UPI అభ్యర్థన మోసం">UPI Request Scam</button>
+        <button class="sim-tab" onclick="loadScenario('job',this)" data-en="Fake Job Offer" data-te="నకిలీ ఉద్యోగ ఆఫర్">Fake Job Offer</button>
+        <button class="sim-tab" onclick="loadScenario('loan',this)" data-en="Loan App Scam" data-te="లోన్ యాప్ మోసం">Loan App Scam</button>
+      </div>
+
+      <div class="sim-body">
+        <div class="sim-scenario">
+          <div class="sim-caller">
+            <div class="sim-avatar" id="simAvatar">🏦</div>
+            <div>
+              <div class="sim-name" id="simName">SBI Bank</div>
+              <div class="sim-sub" id="simSub" data-en="Incoming Call" data-te="వస్తున్న కాల్">Incoming Call</div>
+            </div>
+          </div>
+          <p class="sim-msg" id="simMsg">Loading...</p>
+        </div>
+        <div class="sim-options" id="simOptions"></div>
+        <div class="sim-result" id="simResult">
+          <div class="sim-result-icon" id="simResultIcon"></div>
+          <div class="sim-result-title" id="simResultTitle"></div>
+          <p id="simResultBody"></p>
+          <button class="btn btn-outline btn-sm" onclick="replayScenario()" data-en="↩ Try Again" data-te="↩ మళ్ళీ ప్రయత్నించండి">↩ Try Again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="section section-light reveal">
+    <p class="section-eyebrow" data-en="QUICK REFERENCE" data-te="త్వరిత సూచన">QUICK REFERENCE</p>
+    <h2 class="section-title" data-en="Cyber Safety Checklist" data-te="సైబర్ భద్రత చెక్‌లిస్ట్">Cyber Safety Checklist</h2>
+    <div class="checklist-grid">
+      <div class="check-item reveal-item">✅ <span data-en="Never share OTP with anyone" data-te="OTP ను ఎవరితోనూ పంచుకోకండి">Never share OTP with anyone</span></div>
+      <div class="check-item reveal-item">✅ <span data-en="Never share your UPI PIN" data-te="మీ UPI PIN ను పంచుకోకండి">Never share your UPI PIN</span></div>
+      <div class="check-item reveal-item">✅ <span data-en="Verify unknown links before clicking" data-te="క్లిక్ చేయడానికి ముందు తెలియని లింక్‌లను ధృవీకరించండి">Verify unknown links before clicking</span></div>
+      <div class="check-item reveal-item">✅ <span data-en="Use strong, unique passwords" data-te="బలమైన, ప్రత్యేక పాస్‌వర్డ్‌లు వాడండి">Use strong, unique passwords</span></div>
+      <div class="check-item reveal-item">✅ <span data-en="Verify job offers before paying any fee" data-te="ఏదైనా ఫీజు చెల్లించే ముందు ఉద్యోగ ఆఫర్లను ధృవీకరించండి">Verify job offers before paying any fee</span></div>
+      <div class="check-item reveal-item">✅ <span data-en="Report scams immediately to 1930" data-te="వెంటనే 1930 కి మోసాలను నివేదించండి">Report scams immediately to 1930</span></div>
+    </div>
+  </section>
+
+  <!-- PLEDGE -->
+  <section class="section reveal">
+    <div class="pledge-card">
+      <div class="pledge-icon">🤝</div>
+      <p class="section-eyebrow" data-en="CYBER SAFETY PLEDGE" data-te="సైబర్ భద్రత ప్రతిజ్ఞ">CYBER SAFETY PLEDGE</p>
+      <p class="pledge-text" data-en="“I will never share OTPs. I will verify payment requests. I will educate my family about online scams.”" data-te="“నేను OTP లను ఎప్పుడూ పంచుకోను. నేను చెల్లింపు అభ్యర్థనలను ధృవీకరిస్తాను. నా కుటుంబానికి ఆన్‌లైన్ మోసాల గురించి అవగాహన కల్పిస్తాను.”">"I will never share OTPs. I will verify payment requests. I will educate my family about online scams."</p>
+      <button class="btn btn-primary" id="pledgeBtn" onclick="takePledge()" data-en="Take the Pledge" data-te="ప్రతిజ్ఞ తీసుకోండి">Take the Pledge</button>
+      <div class="pledge-success" id="pledgeSuccess">
+        🎉 <span data-en="Congratulations! You are a Cyber Safety Ambassador." data-te="అభినందనలు! మీరు సైబర్ భద్రత అంబాసిడర్.">Congratulations! You are a Cyber Safety Ambassador.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HELPLINE -->
+  <section class="section helpline-section" id="helpline">
+    <div class="helpline-box">
+      <div class="helpline-icon">🆘</div>
+      <h2 data-en="Report Cyber Crime Immediately" data-te="వెంటనే సైబర్ నేరాన్ని నివేదించండి">Report Cyber Crime Immediately</h2>
+      <p data-en="Report fraud immediately for the best chance of recovering your money." data-te="మీ డబ్బును తిరిగి పొందే ఉత్తమ అవకాశం కోసం వెంటనే మోసాన్ని నివేదించండి.">Report fraud immediately for the best chance of recovering your money.</p>
+      <div class="helpline-cards">
+        <a href="tel:1930" class="helpline-card">
+          <div class="helpline-num">1930</div>
+          <div data-en="National Cyber Crime Helpline · 24×7 · Free" data-te="జాతీయ సైబర్ క్రైమ్ హెల్ప్‌లైన్ · 24×7 · ఉచితం">National Cyber Crime Helpline · 24×7 · Free</div>
+        </a>
+        <a href="https://cybercrime.gov.in" target="_blank" class="helpline-card">
+          <div class="helpline-num" style="font-size:1.3rem">cybercrime.gov.in</div>
+          <div data-en="Report Cyber Crime Online" data-te="ఆన్‌లైన్‌లో సైబర్ నేరాన్ని నివేదించండి">Report Cyber Crime Online</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="section section-light reveal" id="resources">
+    <p class="section-eyebrow" data-en="LEARN MORE" data-te="మరింత తెలుసుకోండి">LEARN MORE</p>
+    <h2 class="section-title" data-en="Resources" data-te="వనరులు">Resources</h2>
+    <div class="resource-grid">
+      <a href="awareness.html" class="resource-card reveal-item">
+        <div class="resource-icon">📖</div>
+        <h3 data-en="Safe Internet Tips" data-te="సురక్షిత ఇంటర్నెట్ చిట్కాలు">Safe Internet Tips</h3>
+        <p data-en="Full guide to every scam type with real examples." data-te="నిజమైన ఉదాహరణలతో ప్రతి మోసం రకానికి పూర్తి గైడ్.">Full guide to every scam type with real examples.</p>
+      </a>
+      <a href="#" class="resource-card reveal-item" onclick="window.print();return false;">
+        <div class="resource-icon">🖨️</div>
+        <h3 data-en="Print This Page" data-te="ఈ పేజీని ప్రింట్ చేయండి">Print This Page</h3>
+        <p data-en="Print or save this checklist to share with family." data-te="కుటుంబంతో పంచుకోవడానికి ఈ చెక్‌లిస్ట్‌ను ప్రింట్ చేయండి లేదా సేవ్ చేయండి.">Print or save this checklist to share with family.</p>
+      </a>
+      <a href="#faqSection" class="resource-card reveal-item">
+        <div class="resource-icon">❓</div>
+        <h3 data-en="Frequently Asked Questions" data-te="తరచుగా అడిగే ప్రశ్నలు">Frequently Asked Questions</h3>
+        <p data-en="Common questions about cyber safety, answered simply." data-te="సైబర్ భద్రత గురించి సాధారణ ప్రశ్నలు, సరళంగా సమాధానం ఇవ్వబడ్డాయి.">Common questions about cyber safety, answered simply.</p>
+      </a>
+    </div>
+
+    <div class="faq-list" id="faqSection">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" data-en="My bank called asking for OTP. Is that normal?" data-te="నా బ్యాంక్ OTP కోసం కాల్ చేసింది. ఇది సాధారణమేనా?">My bank called asking for OTP. Is that normal?</button>
+        <div class="faq-a" data-en="No. Banks, RBI, and government departments never call asking for your OTP, PIN, or password. If this happens, hang up and call your bank's official number directly." data-te="లేదు. బ్యాంకులు, RBI మరియు ప్రభుత్వ శాఖలు ఎప్పుడూ మీ OTP, PIN లేదా పాస్‌వర్డ్ కోసం కాల్ చేయవు. ఇలా జరిగితే, ఫోన్ పెట్టేసి మీ బ్యాంక్ అధికారిక నంబర్‌కు నేరుగా కాల్ చేయండి.">No. Banks, RBI, and government departments never call asking for your OTP, PIN, or password. If this happens, hang up and call your bank's official number directly.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" data-en="I already shared my OTP and lost money. What do I do?" data-te="నేను ఇప్పటికే నా OTP పంచుకుని డబ్బు పోగొట్టుకున్నాను. నేను ఏమి చేయాలి?">I already shared my OTP and lost money. What do I do?</button>
+        <div class="faq-a" data-en="Call 1930 immediately and also report at cybercrime.gov.in. Acting within the first hour gives banks the best chance to freeze the transfer." data-te="వెంటనే 1930 కి కాల్ చేయండి మరియు cybercrime.gov.in లో కూడా నివేదించండి. మొదటి గంటలో చర్య తీసుకోవడం బ్యాంకులకు బదిలీని ఫ్రీజ్ చేసే ఉత్తమ అవకాశం ఇస్తుంది.">Call 1930 immediately and also report at cybercrime.gov.in. Acting within the first hour gives banks the best chance to freeze the transfer.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" data-en="Is it safe to receive money on UPI by entering my PIN?" data-te="UPI లో నా PIN నమోదు చేయడం ద్వారా డబ్బు స్వీకరించడం సురక్షితమేనా?">Is it safe to receive money on UPI by entering my PIN?</button>
+        <div class="faq-a" data-en="No. You never need a PIN to receive money. If any screen asks for your PIN, it means you are sending money out, not receiving it." data-te="లేదు. డబ్బు స్వీకరించడానికి మీకు ఎప్పుడూ PIN అవసరం లేదు. ఏ స్క్రీన్‌అయినా మీ PIN అడిగితే, మీరు డబ్బు పంపుతున్నారని అర్థం.">No. You never need a PIN to receive money. If any screen asks for your PIN, it means you are sending money out, not receiving it.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" data-en="How can I tell if a job offer is fake?" data-te="ఉద్యోగ ఆఫర్ నకిలీదో కాదో నేను ఎలా చెప్పగలను?">How can I tell if a job offer is fake?</button>
+        <div class="faq-a" data-en="Any job that asks you to pay money — for registration, training, or a 'joining kit' — before you start working is almost always fake. Legitimate employers pay you, not the other way around." data-te="ప్రారంభించడానికి ముందు రిజిస్ట్రేషన్, ట్రైనింగ్ లేదా 'జాయినింగ్ కిట్' కోసం డబ్బు చెల్లించమని అడిగే ఏ ఉద్యోగమైనా దాదాపు ఎల్లప్పుడూ నకిలీదే.">Any job that asks you to pay money — for registration, training, or a 'joining kit' — before you start working is almost always fake. Legitimate employers pay you, not the other way around.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-about">
+      <div class="footer-brand"><span>🛡️</span> CyberSafe Kadapa</div>
+      <p data-en="A Digital Safety Awareness Portal developed as a Community Service Project to help rural parents and students of Kadapa District recognize and avoid online fraud." data-te="కడప జిల్లా గ్రామీణ తల్లిదండ్రులు మరియు విద్యార్థులు ఆన్‌లైన్ మోసాన్ని గుర్తించి నివారించడంలో సహాయపడటానికి కమ్యూనిటీ సర్వీస్ ప్రాజెక్ట్‌గా అభివృద్ధి చేయబడిన డిజిటల్ భద్రత అవగాహన పోర్టల్.">A Digital Safety Awareness Portal developed as a Community Service Project to help rural parents and students of Kadapa District recognize and avoid online fraud.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Project" data-te="ప్రాజెక్ట్">Project</h4>
+      <p>KSRM College of Engineering</p>
+      <p data-en="Community Service Project" data-te="కమ్యూనిటీ సర్వీస్ ప్రాజెక్ట్">Community Service Project</p>
+      <p data-en="Kadapa District, Andhra Pradesh" data-te="కడప జిల్లా, ఆంధ్రప్రదేశ్">Kadapa District, Andhra Pradesh</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Quick Links" data-te="త్వరిత లింకులు">Quick Links</h4>
+      <a href="index.html" data-en="Home" data-te="హోమ్">Home</a>
+      <a href="awareness.html" data-en="Common Scams" data-te="సాధారణ మోసాలు">Common Scams</a>
+      <a href="#simulator" data-en="Scam Simulator" data-te="స్కామ్ సిమ్యులేటర్">Scam Simulator</a>
+      <a href="#resources" data-en="Resources" data-te="వనరులు">Resources</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-en="Emergency Helpline" data-te="అత్యవసర హెల్ప్‌లైన్">Emergency Helpline</h4>
+      <p><strong>📞 1930</strong></p>
+      <p data-en="National Cyber Crime Helpline" data-te="జాతీయ సైబర్ క్రైమ్ హెల్ప్‌లైన్">National Cyber Crime Helpline</p>
+      <a href="https://cybercrime.gov.in" target="_blank">cybercrime.gov.in</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-en="© 2024 CyberSafe Kadapa · Community Service Project · KSRM College of Engineering" data-te="© 2024 సైబర్‌సేఫ్ కడప · కమ్యూనిటీ సర్వీస్ ప్రాజెక్ట్ · KSRM కళాశాల">© 2024 CyberSafe Kadapa · Community Service Project · KSRM College of Engineering</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
