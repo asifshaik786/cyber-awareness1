@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our CSP Mission</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(6, 182, 212, 0.2);
+            --crt-green: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Bilingual Toggle Mechanics */
+        body.lang-en .te-text { display: none !important; }
+        body.lang-te .en-text { display: none !important; }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lang-switch-wrapper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--accent-cyan);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+            background-color: #ffffff;
+        }
+
+        .lang-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Layout Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        /* Glassmorphic Cyber Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 20px var(--border-glow);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .team-cluster {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .member-node {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .member-node:hover, .member-node.active {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.05);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+        }
+
+        .member-node h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }
+
+        .member-node p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .member-details-box {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 3px solid var(--accent-cyan);
+            min-height: 100px;
+        }
+
+        .member-details-box h4 {
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-details-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .member-details-box li {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .member-details-box li::before {
+            content: "⚡";
+            font-size: 0.8rem;
+        }
+
+        /* Interactive Timeline Tabs (Merged Update) */
+        .timeline-section {
+            margin-top: 10px;
+        }
+
+        .timeline-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Scrollbar styles for tabs */
+        .timeline-tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        .timeline-tabs::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .timeline-tabs::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.5);
+            border-radius: 10px;
+        }
+
+        .time-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .time-btn:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .time-btn.active {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+        }
+
+        .timeline-content {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 25px;
+            min-height: 140px;
+            border-left: 4px solid var(--accent-cyan);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-content h3 {
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .chart-container {
+            margin-top: 1rem;
+        }
+
+        .chart-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .chart-btn.active {
+            background: var(--accent-cyan);
+            color: #0f172a;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .bar-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .bar-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .bar-track {
+            background: rgba(255, 255, 255, 0.05);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+    <div class="container">
+        <!-- Dashboard Header Node -->
+        <header>
+            <div class="lang-switch-wrapper">
+                <span class="lang-label">EN</span>
+                <label class="switch">
+                    <input type="checkbox" id="langToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="lang-label">తెలుగు</span>
+            </div>
+            
+            <h1 class="en-text">🛡️ About Our Community Service Project</h1>
+            <h1 class="te-text">🛡️ మా కమ్యూనిటీ సర్వీస్ ప్రాజెక్ట్ గురించి</h1>
+            
+            <p class="en-text">Empowering rural families and students with robust digital defense strategies.</p>
+            <p class="te-text">గ్రామీణ విద్యార్థులు మరియు కుటుంబాలకు సైబర్ మోసాలపై బలమైన అవగాహన కల్పించడం.</p>
+        </header>
+
+        <div class="dashboard-grid">
+            
+            <!-- Column 1: Core Objectives & Metrics Tracker -->
+            <div class="card">
+                <h2 class="en-text">📊 Project Telemetry & Direct Objectives</h2>
+                <h2 class="te-text">📊 ప్రాజెక్ట్ లక్ష్యాలు మరియు సర్వే డేటా</h2>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    This initiative is built specifically to safeguard communities against malicious engineering tactics like OTP traps, fraudulent banking updates, and fake verification scams targeting non-technical populations.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    గ్రామీణ ప్రాంతాల ప్రజలను ఆన్‌లైన్ బ్యాంకింగ్, OTP ఉచ్చులు మరియు నకిలీ వెరిఫికేషన్ మెసేజ్ల వల్ల ఎదురవుతున్న మోసాల నుండి రక్షించడమే మా ప్రాజెక్ట్ యొక్క ముఖ్య ఉద్దేశ్యం.
+                </p>
+
+                <!-- Interactive Chart Module -->
+                <div class="chart-container">
+                    <div class="chart-selector">
+                        <button class="chart-btn active" onclick="loadChartDataset('vulnerabilities', this)">
+                            <span class="en-text">Scam Threats Found</span>
+                            <span class="te-text">గుర్తించిన మోసాలు</span>
+                        </button>
+                        <button class="chart-btn" onclick="loadChartDataset('knowledge', this)">
+                            <span class="en-text">Awareness Levels</span>
+                            <span class="te-text">అవగాహన స్థాయిలు</span>
+                        </button>
+                    </div>
+
+                    <div class="bar-chart" id="chartView">
+                        <!-- Chart rows rendered dynamically below -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Roster Matrix (Member Contributions) -->
+            <div class="card">
+                <h2 class="en-text">👥 Operational Team Nodes</h2>
+                <h2 class="te-text">👥 కార్యాచరణ బృందం వివరాలు</h2>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    Click a member node block below to view their assigned website development tasks and documentation roles.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                    వెబ్‌సైట్ డెవలప్‌మెంట్ మరియు డాక్యుమెంటేషన్‌లో బృంద సభ్యుల బాధ్యతలను చూడడానికి క్రింది బ్లాక్‌లపై క్లిక్ చేయండి.
+                </p>
+
+                <div class="team-cluster">
+                    <div class="member-node" id="member1" onclick="selectMember('m1', this)">
+                        <h3>Asif</h3>
+                        <p>Member 1</p>
+                    </div>
+                    <div class="member-node active" id="defaultMember" onclick="selectMember('m2', this)">
+                        <h3>Salman</h3>
+                        <p>Member 2</p>
+                    </div>
+                    <div class="member-node" id="member3" onclick="selectMember('m3', this)">
+                        <h3>Yashaswini</h3>
+                        <p>Member 3</p>
+                    </div>
+                    <div class="member-node" id="member4" onclick="selectMember('m4', this)">
+                        <h3>Fiza</h3>
+                        <p>Member 4</p>
+                    </div>
+                </div>
+
+                <div class="member-details-box" id="memberDetailsDisplay">
+                    <!-- Loaded dynamically via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Row 3: Interactive Futuristic 8-Week Project Plan Tracker -->
+            <div class="card full-width">
+                <h2 class="en-text">📅 Project Phase Matrix (8-Week Roadmap)</h2>
+                <h2 class="te-text">📅 ప్రాజెక్ట్ దశలు (8 వారాల ప్రణాళిక)</h2>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Click the milestone phases below to review our community progress metrics and detailed 8-week developmental cycle.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    మా 8 వారాల ప్రాజెక్ట్ పురోగతి మరియు వివిధ దశల వివరాలను సమీక్షించడానికి క్రింది మైలురాళ్లపై క్లిక్ చేయండి.
+                </p>
+
+                <div class="timeline-section">
+                    <div class="timeline-tabs">
+                        <button class="time-btn active" onclick="showPhase(1, this)">
+                            <span class="en-text">Weeks 1-2: Survey</span>
+                            <span class="te-text">వారాలు 1-2: సర్వే</span>
+                        </button>
+                        <button class="time-btn" onclick="showPhase(2, this)">
+                            <span class="en-text">Weeks 3-4: Analysis</span>
+                            <span class="te-text">వారాలు 3-4: విశ్లేషణ</span>
+                        </button>
+                        <button class="time-btn" onclick="showPhase(3, this)">
+                            <span class="en-text">Weeks 5-6: Deployment</span>
+                            <span class="te-text">వారాలు 5-6: డెవలప్‌మెంట్</span>
+                        </button>
+                        <button class="time-btn" onclick="showPhase(4, this)">
+                            <span class="en-text">Weeks 7-8: Camp & Review</span>
+                            <span class="te-text">వారాలు 7-8: ప్రదర్శన</span>
+                        </button>
+                    </div>
+
+                    <div id="phaseDisplay" class="timeline-content">
+                        <!-- Content Injected via JavaScript based on Phase & Language -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- Central State Variables ---
+        let currentPhase = 1;
+        let currentDatasetKey = "vulnerabilities";
+
+        // --- Language Toggle Mechanics ---
+        const langToggle = document.getElementById('langToggle');
+        langToggle.addEventListener('change', () => {
+            if (langToggle.checked) {
+                document.body.className = 'lang-te';
+            } else {
+                document.body.className = 'lang-en';
+            }
+            // Re-render components to update labels in current language
+            renderActiveChart();
+            renderActivePhase();
+            
+            // Re-render currently selected member to update language
+            const activeMemberBtn = document.querySelector('.member-node.active');
+            if(activeMemberBtn) {
+                const memberId = activeMemberBtn.id.replace('member', 'm').replace('defaultMember', 'm2');
+                selectMember(memberId, activeMemberBtn);
+            }
+        });
+
+        // --- Operational Team Node Allocation Map ---
+        const memberData = {
+            m1: {
+                name: "Asif Shaik",
+                role: "Member 1",
+                en: {
+                    title: "System Coordinator & Router",
+                    tasks: [
+                        "Initializes CSS layout schemas",
+                        "Responsible for website Home module",
+                        "Configures central Navigation elements",
+                        "Coordinates Git Repository integration workflows",
+                        "Drafts Chapter 1: Introduction & Objectives for Documentation"
+                    ]
+                },
+                te: {
+                    title: "సిస్టమ్ కోఆర్డినేటర్ & రూటర్",
+                    tasks: [
+                        "ప్రధాన CSS మరియు వెబ్‌సైట్ లేఅవుట్ డిజైన్",
+                        "వెబ్‌సైట్ హోమ్ (Home Page) రూపకల్పన బాధ్యత",
+                        "నావిగేషన్ బార్ మ్యాపింగ్ ప్రక్రియలు",
+                        "గిట్‌హబ్ ప్రాజెక్ట్ కోఆర్డినేషన్",
+                        "డాక్యుమెంటేషన్ చాప్టర్ 1: పరిచయం & లక్ష్యాలు రూపకల్పన"
+                    ]
+                }
+            },
+            m2: {
+                name: "Salman (You)",
+                role: "Member 2",
+                en: {
+                    title: "Information Architect & Content Node",
+                    tasks: [
+                        "Develops interactive About Page matrices",
+                        "Generates responsive Contact module configurations",
+                        "Drafts localized Threat Awareness Guides",
+                        "Formulates Chapter 2: Literature Survey archives for Documentation"
+                    ]
+                },
+                te: {
+                    title: "సమాచార ఆర్కిటెక్ట్ & కంటెంట్ నోడ్",
+                    tasks: [
+                        "ఇంటరాక్టివ్ ఎబౌట్ అస్ (About Page) రూపకల్పన",
+                        "కాంటాక్ట్ అస్ మరియు సహాయక కేంద్రం పేజీ రూపకల్పన",
+                        "తెలుగు మరియు ఇంగ్లీష్ సైబర్ మోసాల అవగాహన వ్యాసాలు",
+                        "డాక్యుమెంటేషన్ చాప్టర్ 2: లిటరేచర్ సర్వే విశ్లేషణ"
+                    ]
+                }
+            },
+            m3: {
+                name: "Yashaswini",
+                role: "Member 3",
+                en: {
+                    title: "Interactive Systems Designer",
+                    tasks: [
+                        "Responsible for Cyber Quiz UI engine",
+                        "Constructs responsive Quiz evaluation structures",
+                        "Handles gamified cyber security badges",
+                        "Generates Chapter 3: Project Methodology records for Documentation"
+                    ]
+                },
+                te: {
+                    title: "ఇంటరాక్టివ్ సిస్టమ్స్ డిజైనర్",
+                    tasks: [
+                        "సైబర్ క్విజ్ (Quiz Page) నిర్మాణ బాధ్యత",
+                        "క్విజ్ మార్కుల మూల్యాంకన పేజీల నిర్మాణం",
+                        "యూజర్ అవగాహన బ్యాడ్జ్ ల రూపకల్పన",
+                        "డాక్యుమెంటేషన్ చాప్టర్ 3: ప్రాజెక్ట్ పద్ధతులు మరియు ప్రణాళిక"
+                    ]
+                }
+            },
+            m4: {
+                name: "Shaik Fiza Sultana",
+                role: "Member 4",
+                en: {
+                    title: "Security Diagnostics & Quality Assurance",
+                    tasks: [
+                        "Assembles Password Entropy dynamic gauges",
+                        "Formulates live Scam Alert warning systems",
+                        "Manages mobile browser compilation standards",
+                        "Compiles Chapter 4/5: Results & Conclusion details for Documentation"
+                    ]
+                },
+                te: {
+                    title: "సెక్యూరిటీ డయాగ్నోస్టిక్స్ & టెస్టింగ్",
+                    tasks: [
+                        "పాస్‌వర్డ్ బలం పరీక్షించే ఇంటరాక్టివ్ సిస్టమ్",
+                        "లైవ్ స్కామ్ అలర్ట్ చెకర్ రూపకల్పన",
+                        "మొబైల్ మరియు వెబ్ బ్రౌజర్ అనుకూలత పరీక్షలు",
+                        "డాక్యుమెంటేషన్ చాప్టర్ 4/5: ఫలితాలు మరియు ముగింపు విశ్లేషణ"
+                    ]
+                }
+            }
+        };
+
+        function selectMember(id, element) {
+            document.querySelectorAll('.member-node').forEach(n => n.classList.remove('active'));
+            element.classList.add('active');
+
+            const isTelugu = document.body.classList.contains('lang-te');
+            const data = memberData[id];
+            const content = isTelugu ? data.te : data.en;
+            const container = document.getElementById('memberDetailsDisplay');
+
+            container.innerHTML = `
+                <h4>${data.name} — ${content.title}</h4>
+                <ul>
+                    ${content.tasks.map(t => `<li>${t}</li>`).join('')}
+                </ul>
+            `;
+        }
+
+        // --- Chart Injection Mechanics ---
+        const datasets = {
+            vulnerabilities: {
+                en: [
+                    { label: "Phone UPI Payment Requests", value: 82, desc: "Victims scanning refund traps" },
+                    { label: "Electricity Disconnect Warnings", value: 68, desc: "Victims downloading control tools" },
+                    { label: "Sim Card Verification OTPs", value: 55, desc: "Targeted account bypass threats" }
+                ],
+                te: [
+                    { label: "ఫేక్ UPI మనీ రిసీవ్డ్ లింక్స్", value: 82, desc: "స్కాన్ చేసి పిన్ ఎంటర్ చేసే ప్రమాదాలు" },
+                    { label: "కరెంట్ కట్ అవుతుంది అనే మెసేజ్ లు", value: 68, desc: "నకిలీ సహాయక యాప్స్ ఎక్కించే సమస్యలు" },
+                    { label: "సిమ్ కార్డు బ్లాకింగ్ మెసేజ్ లు (OTPs)", value: 55, desc: "ఓటిపి ని మోసగాళ్లకు చేరవేసే ప్రమాదాలు" }
+                ]
+            },
+            knowledge: {
+                en: [
+                    { label: "Password Strength Integrity", value: 24, desc: "Households using safe passwords" },
+                    { label: "Helpline Number (1930) Awareness", value: 12, desc: "Aware of immediate frozen pipelines" },
+                    { label: "Phishing Links Isolation", value: 18, desc: "Ability to detect spoofed domain names" }
+                ],
+                te: [
+                    { label: "సరైన పాస్‌వర్డ్ అవగాహన", value: 24, desc: "సురక్షితమైన పాస్‌వర్డ్‌లు వాడుతున్న వారు" },
+                    { label: "1930 హెల్ప్‌లైన్ గురించి అవగాహన", value: 12, desc: "సైబర్ మోసాలు జరిగినప్పుడు సంప్రదించే నెంబర్" },
+                    { label: "నకిలీ వెబ్‌సైట్ లింక్స్ గుర్తింపు", value: 18, desc: "సరైన లింక్ ఏంటో గుర్తించగల సామర్థ్యం" }
+                ]
+            }
+        };
+
+        function loadChartDataset(key, btnElement) {
+            document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            currentDatasetKey = key;
+            renderActiveChart();
+        }
+
+        function renderActiveChart() {
+            const isTelugu = document.body.classList.contains('lang-te');
+            const dataList = isTelugu ? datasets[currentDatasetKey].te : datasets[currentDatasetKey].en;
+            const chartView = document.getElementById('chartView');
+
+            chartView.innerHTML = dataList.map(item => `
+                <div class="bar-row">
+                    <div class="bar-meta">
+                        <span style="font-weight: 600;">${item.label}</span>
+                        <span style="color: var(--accent-cyan); font-weight: bold;">${item.value}%</span>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: ${item.value}%"></div>
+                    </div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">${item.desc}</span>
+                </div>
+            `).join('');
+        }
+
+        // --- Interactive Timeline Phase Tracker ---
+        const phaseData = {
+            1: {
+                en: {
+                    title: "Phase 1: Field Data Collection & Household Surveys",
+                    desc: "During this preliminary window, our engineering team conducted targeted on-the-ground analytical assessments in local rural areas. We surveyed over 50 households to document how many citizens have previously fallen prey to malicious digital actors or automated system traps like UPI refund scams and lottery links."
+                },
+                te: {
+                    title: "దశ 1: ఫీల్డ్ డేటా సేకరణ & కుటుంబాల సర్వే",
+                    desc: "ఈ ప్రాథమిక దశలో, మా బృందం గ్రామీణ ప్రాంతాలలో క్షేత్రస్థాయి పరిశీలనలు నిర్వహించింది. 50కి పైగా కుటుంబాలను సర్వే చేసి, ఎంతమంది UPI రీఫండ్ స్కామ్‌లు మరియు నకిలీ లాటరీ లింకుల వంటి డిజిటల్ మోసాల బారిన పడ్డారో డాక్యుమెంట్ చేసాము."
+                }
+            },
+            2: {
+                en: {
+                    title: "Phase 2: Vulnerability Analysis & Curriculum Mapping",
+                    desc: "We classified and grouped the core threats identified in the rural sectors. Data patterns pointed sharply to a critical deficiency in basic account security, visual verification practices, and a high susceptibility to social engineering pressure traps involving fake electricity bill cutoff warnings."
+                },
+                te: {
+                    title: "దశ 2: సమస్యల విశ్లేషణ & ప్రణాళిక రూపకల్పన",
+                    desc: "గ్రామీణ రంగాల్లో గుర్తించిన ప్రధాన ముప్పులను మేము వర్గీకరించాము. బేసిక్ అకౌంట్ సెక్యూరిటీ లేకపోవడం, నకిలీ కరెంటు బిల్లుల హెచ్చరికల వంటి ఒత్తిడి పెంచే మోసాలను గుర్తించడంలో అవగాహన లోపం ప్రధానంగా ఉన్నాయని మా డేటా విశ్లేషణలో తేలింది."
+                }
+            },
+            3: {
+                en: {
+                    title: "Phase 3: Interactive Platform Synthesis & Development",
+                    desc: "Our dev terminal active group built out this cloud-hosted responsive simulation array on GitHub. We optimized all modules, including password checkers, interactive quizzes, and dual-language threat matrices, to run cleanly on lightweight mobile network connections widely used across regional villages."
+                },
+                te: {
+                    title: "దశ 3: ఇంటరాక్టివ్ వెబ్‌సైట్ అభివృద్ధి & కోడింగ్",
+                    desc: "మా డెవలప్‌మెంట్ బృందం గిట్‌హబ్ ఆధారంగా ఈ వెబ్‌సైట్‌ను రూపొందించింది. గ్రామీణ ప్రాంతాల్లో ఉండే తక్కువ ఇంటర్నెట్ స్పీడ్‌లో కూడా పాస్‌వర్డ్ చెకర్స్, ఇంటరాక్టివ్ క్విజ్ మరియు తెలుగు-ఇంగ్లీష్ మాడ్యూల్స్ వేగంగా పనిచేసేలా అన్నింటినీ ఆప్టిమైజ్ చేసాము."
+                }
+            },
+            4: {
+                en: {
+                    title: "Phase 4: Community Awareness Camps & Final Validation",
+                    desc: "Deploying deep education operations! We walk directly into local communities, demonstrate the interactive platform live on parents' mobile screens, teach them to spot fake URLs, compile our comprehensive 8-week documentation portfolio, and present our final project metrics to evaluators."
+                },
+                te: {
+                    title: "దశ 4: కమ్యూనిటీ అవగాహన సదస్సులు & ప్రాజెక్ట్ ముగింపు",
+                    desc: "ప్రాజెక్ట్ చివరి దశలో, గ్రామాల్లో ప్రత్యక్ష అవగాహన సదస్సులు నిర్వహించాము. ప్రజల మొబైల్స్‌లో మా వెబ్‌సైట్ ఓపెన్ చేసి, నకిలీ లింకులను ఎలా గుర్తించాలో నేర్పించాము. చివరగా మా 8-వారాల ప్రాజెక్ట్ డాక్యుమెంటేషన్‌ను పూర్తి చేసి మూల్యాంకన కోసం సమర్పించాము."
+                }
+            }
+        };
+
+        function showPhase(phaseNum, element) {
+            if (element) {
+                document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
+            }
+            currentPhase = phaseNum;
+            renderActivePhase();
+        }
+
+        function renderActivePhase() {
+            const isTelugu = document.body.classList.contains('lang-te');
+            const data = isTelugu ? phaseData[currentPhase].te : phaseData[currentPhase].en;
+            const display = document.getElementById('phaseDisplay');
+            
+            display.style.opacity = 0;
+            setTimeout(() => {
+                display.innerHTML = `
+                    <h3>${data.title}</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">${data.desc}</p>
+                `;
+                display.style.opacity = 1;
+            }, 150);
+        }
+
+        // --- Run on DOM Launch ---
+        document.addEventListener('DOMContentLoaded', () => {
+            selectMember('m2', document.getElementById('defaultMember'));
+            renderActiveChart();
+            renderActivePhase();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threat Database</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(6, 182, 212, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Bilingual Toggle Mechanics */
+        body.lang-en .te-text { display: none !important; }
+        body.lang-te .en-text { display: none !important; }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lang-switch-wrapper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--accent-cyan);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+            background-color: #ffffff;
+        }
+
+        .lang-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Search & Filter Section */
+        .controls-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .controls-card {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-btn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-cyan);
+            color: #0f172a;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Threat Matrix Grid */
+        .threat-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 900px) {
+            .threat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .threat-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .threat-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 20px var(--border-glow);
+            transform: translateY(-2px);
+        }
+
+        .threat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .threat-badge {
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .badge-critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .threat-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .threat-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .defensive-action {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--accent-green);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .defensive-action h4 {
+            color: var(--accent-green);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .defensive-action p {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* Link Scanner Section */
+        .scanner-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .scanner-card h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fake-url-hud {
+            background: #000000;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.2rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            word-wrap: break-word;
+            margin-bottom: 1.5rem;
+        }
+
+        .url-seg {
+            cursor: pointer;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            border-bottom: 2px dashed transparent;
+        }
+
+        .url-seg:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .seg-sub { color: #f8fafc; border-color: #f8fafc; }
+        .seg-dom { color: var(--accent-red); border-color: var(--accent-red); font-weight: bold; }
+        .seg-path { color: var(--text-muted); border-color: var(--text-muted); }
+
+        .scan-result-box {
+            display: none;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            padding: 1.2rem;
+            border-left: 4px solid var(--accent-cyan);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .scan-result-box h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .scan-result-box p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        /* Myth Buster System */
+        .myth-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .myth-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .myth-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .myth-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .myth-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            border-left: 4px solid var(--accent-red);
+            position: relative;
+        }
+
+        .myth-card.solved {
+            border-color: var(--accent-green);
+            border-left-color: var(--accent-green);
+        }
+
+        .myth-card h3 {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .myth-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            color: var(--accent-green);
+            font-weight: 500;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+    <div class="container">
+        <!-- Interactive Header Node -->
+        <header>
+            <div class="lang-switch-wrapper">
+                <span class="lang-label">EN</span>
+                <label class="switch">
+                    <input type="checkbox" id="langToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="lang-label">తెలుగు</span>
+            </div>
+            
+            <h1 class="en-text">📚 Threat Intelligence Database</h1>
+            <h1 class="te-text">📚 సైబర్ మోసాల విశ్లేషణ డేటాబేస్</h1>
+            
+            <p class="en-text">Extensive breakdown of tactical attack loops targeted at rural phone and banking systems.</p>
+            <p class="te-text">గ్రామీణ ఫోన్ మరియు బ్యాంకింగ్ వ్యవస్థలను టార్గెట్ చేసే మోసాలపై లోతైన పరిశోధన రిపోర్టు.</p>
+        </header>
+
+        <!-- Search and Categorization Controller -->
+        <div class="controls-card">
+            <div class="search-box">
+                <input type="text" id="threatSearch" class="search-input" placeholder="Search threat database / మోసాల కోసం వెతకండి..." onkeyup="executeSearch()">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="applyFilter('all', this)">
+                    <span class="en-text">All Vectors</span><span class="te-text">అన్ని విభాగాలు</span>
+                </button>
+                <button class="filter-btn" onclick="applyFilter('ai', this)">
+                    <span class="en-text">AI / Deepfakes</span><span class="te-text">AI వాయిస్ మోసాలు</span>
+                </button>
+                <button class="filter-btn" onclick="applyFilter('social', this)">
+                    <span class="en-text">Social Engineering</span><span class="te-text">సోషల్ ఇంజనీరింగ్</span>
+                </button>
+                <button class="filter-btn" onclick="applyFilter('upi', this)">
+                    <span class="en-text">UPI / Banking</span><span class="te-text">UPI బ్యాంకింగ్</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Threat Cases Feed -->
+        <div class="threat-grid" id="threatsList">
+            
+            <!-- Threat 1 -->
+            <div class="threat-card" data-category="ai">
+                <div>
+                    <div class="threat-header">
+                        <span class="threat-badge badge-critical">Critical Threat</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">ID: VEC-091</span>
+                    </div>
+                    <h3>
+                        <span class="en-text">AI Voice Clone Emergency Scams</span>
+                        <span class="te-text">AI వాయిస్ క్లోనింగ్ ఎమర్జెన్సీ మోసాలు</span>
+                    </h3>
+                    <p class="en-text">Cyber criminals extract voice samples of your children or siblings from social media profiles (TikTok, WhatsApp voice notes, Instagram). Using advanced neural synthesis software, they clone the voice perfectly. They then place phone calls to parents, mimicking emergency calls from hospitals, police stations, or custody terminals, requesting immediate digital transfers.</p>
+                    <p class="te-text">నేరస్థులు మీ పిల్లలు లేదా బంధువుల గొంతును ఇంటర్నెట్ లోని వారి పోస్టుల ఆధారంగా సేకరించి, AI టెక్నాలజీతో ఆ గొంతును తయారుచేస్తారు. తరువాత తల్లిదండ్రులకు ఫోన్ చేసి, "నేను ఆసుపత్రిలో ఉన్నాను, ప్రమాదంలో ఉన్నాను, వెంటనే ఫోన్ పే లో డబ్బు పంపండి" అని బెదిరించి లాక్కుంటారు.</p>
+                </div>
+                <div class="defensive-action">
+                    <h4 class="en-text">🛡️ Defensive Shield Protocols:</h4>
+                    <h4 class="te-text">🛡️ రక్షణ మార్గదర్శకాలు:</h4>
+                    <p class="en-text">Do not panic. Hang up immediately and place a direct telephone call back to your child's standard verified number. Establish a private "Family Password" to verify identity in emergency situations.</p>
+                    <p class="te-text">కంగారు పడకండి. కాల్ కట్ చేసి మీ కుటుంబ సభ్యుల అసలు ఫోన్ నెంబర్ కి మీరే కాల్ చేసి నిర్ధారించుకోండి. ఎమర్జెన్సీలో నిజమో కాదో తెలుసుకోవడానికి కుటుంబ సభ్యులలో ఒక రహస్య కోడ్ పదాన్ని వాడండి.</p>
+                </div>
+            </div>
+
+            <!-- Threat 2 -->
+            <div class="threat-card" data-category="social">
+                <div>
+                    <div class="threat-header">
+                        <span class="threat-badge badge-critical">Critical Threat</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">ID: VEC-042</span>
+                    </div>
+                    <h3>
+                        <span class="en-text">Telegram YouTube Video Rating Jobs</span>
+                        <span class="te-text">టెలిగ్రామ్ యూట్యూబ్ రేటింగ్ నకిలీ ఉద్యోగాలు</span>
+                    </h3>
+                    <p class="en-text">Victims are approached on WhatsApp or SMS with part-time job offers paying ₹2,000 to ₹5,000 daily for liking videos. To build initial trust, the scammers pay a real commission of ₹150. Later, the user is transitioned into premium Telegram task chains and forced to invest growing "deposits" to release accumulated salaries, which are then blocked forever.</p>
+                    <p class="te-text">"యూట్యూబ్ వీడియోలను లైక్ చేస్తే రోజుకు రూ. 5000 వరకు సంపాదించవచ్చు" అని వాట్సాప్ లేదా SMS ద్వారా సందేశం వస్తుంది. నమ్మకం కలిగించడానికి మొదట రూ. 150 అసలు డబ్బులు పంపుతారు. ఆ తరువాత మిమ్మల్ని టెలిగ్రామ్ గ్రూపుల్లో చేర్చి, భారీ జీతాలు ఇవ్వడానికి మీ వద్దే పెద్ద ఎత్తున డిపాజిట్లు కట్టించుకుని మిమ్మల్ని బ్లాక్ చేస్తారు.</p>
+                </div>
+                <div class="defensive-action">
+                    <h4 class="en-text">🛡️ Defensive Shield Protocols:</h4>
+                    <h4 class="te-text">🛡️ రక్షణ మార్గదర్శకాలు:</h4>
+                    <p class="en-text">Legitimate enterprises do not require security deposits or registration investments to pay employee salaries. Block such accounts instantly; never deposit personal capital to retrieve task commissions.</p>
+                    <p class="te-text">ఏ కంపెనీ కూడా ఉద్యోగం ఇవ్వడానికి మీ వద్ద నుండి డబ్బులు అడగదు. ఇలాంటి నకిలీ ఆఫర్లను వాట్సాప్ లో వెంటనే బ్లాక్ చేయండి; సంపాదన కోసం మీ సొంత సొమ్మును ఎప్పుడూ డిపాజిట్ చేయకండి.</p>
+                </div>
+            </div>
+
+            <!-- Threat 3 -->
+            <div class="threat-card" data-category="upi">
+                <div>
+                    <div class="threat-header">
+                        <span class="threat-badge badge-warning">High Threat</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">ID: VEC-115</span>
+                    </div>
+                    <h3>
+                        <span class="en-text">Power Grid / EB Disconnection Alerts</span>
+                        <span class="te-text">కరెంట్ బిల్లుల చెల్లింపు మోసపూరిత మెసేజ్లు</span>
+                    </h3>
+                    <p class="en-text">An SMS threat alerts the consumer: "Your electricity connection will be severed tonight by 9:30 PM due to a billing issue." Fearing the cutoff, rural users contact the provided fake number. The operator guides them to download an app (AnyDesk, TeamViewer) to verify details with a minor ₹10 fee, granting full remote control of the victim's phone to drain bank accounts.</p>
+                    <p class="te-text">"కరెంటు బిల్లు కట్టలేదు, ఈ రాత్రికి మీ కరెంట్ కట్ చేయబడుతుంది, వెంటనే ఈ నెంబర్ లో సంప్రదించండి" అని ఒక నకిలీ మెసేజ్ వస్తుంది. కరెంటు పోతుందనే భయంతో ఆ నెంబర్ కు కాల్ చేస్తే, వారు మీ చేత 'AnyDesk' లాంటి రిమోట్ యాప్స్ ఎక్కించి మీ ఫోన్ లోని బ్యాంక్ డేటా మొత్తాన్ని హ్యాక్ చేసి అకౌంట్ ఖాళీ చేస్తారు.</p>
+                </div>
+                <div class="defensive-action">
+                    <h4 class="en-text">🛡️ Defensive Shield Protocols:</h4>
+                    <h4 class="te-text">🛡️ రక్షణ మార్గదర్శకాలు:</h4>
+                    <p class="en-text">Electricity departments never coordinate disconnects over private cellular numbers or ask users to download remote screen-sharing tools. Verify utility statuses directly with the official local substation.</p>
+                    <p class="te-text">విద్యుత్ అధికారులు వ్యక్తిగత ఫోన్ల ద్వారా కరెంట్ కట్ చేస్తామని ఎప్పుడూ హెచ్చరించరు, స్క్రీన్ షేరింగ్ యాప్స్ అసలు ఎక్కించమని అడగరు. మీ స్థానిక విద్యుత్ సబ్‌స్టేషన్‌ను మాత్రమే నేరుగా సంప్రదించండి.</p>
+                </div>
+            </div>
+
+            <!-- Threat 4 -->
+            <div class="threat-card" data-category="social">
+                <div>
+                    <div class="threat-header">
+                        <span class="threat-badge badge-warning">High Threat</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">ID: VEC-053</span>
+                    </div>
+                    <h3>
+                        <span class="en-text">FedEx / Courier Customs Custody Calls</span>
+                        <span class="te-text">కొరియర్ / కస్టమ్స్ నకిలీ బెదిరింపు కాల్స్</span>
+                    </h3>
+                    <p class="en-text">Scammers call claiming a parcel sent under your Aadhaar profile was seized with illegal drugs or passports at a customs portal. They simulate a video call with actor-policemen on Skype/WhatsApp, warning of imminent arrest. They pressure the victim into transferring "clearance fees" or "investigation deposits" to bypass criminal proceedings.</p>
+                    <p class="te-text">మీ ఆధార్ కార్డు ద్వారా పంపబడిన ఒక కొరియర్ లో డ్రగ్స్ లేదా నకిలీ పాస్‌పోర్ట్‌లు దొరికాయి అని ఫోన్ కాల్ వస్తుంది. స్మార్ట్ గా స్కెచ్ వేసి పోలీసుల యూనిఫామ్ వేసుకుని స్కైప్ లేదా వాట్సాప్ కాల్స్ లో బెదిరించి, కేసు లేకుండా చెయ్యడానికి లక్షల రూపాయలను వసూలు చేస్తారు.</p>
+                </div>
+                <div class="defensive-action">
+                    <h4 class="en-text">🛡️ Defensive Shield Protocols:</h4>
+                    <h4 class="te-text">🛡️ రక్షణ మార్గదర్శకాలు:</h4>
+                    <p class="en-text">Indian law enforcement agencies do not conduct structural criminal interrogations or demand secure balance deposits via Skype, WhatsApp video, or third-party bank applications.</p>
+                    <p class="te-text">భారతీయ రక్షక భటులు లేదా పోలీసులు ఎప్పుడూ కూడా వాట్సాప్ లేదా స్కైప్ వీడియో కాల్స్ లో విచారణలు చేయరు, కేసుల నుండి బయటపడడానికి డబ్బులు అడగరు.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Link Scanner Section -->
+        <div class="scanner-card">
+            <h2 class="en-text">🔍 Interactive Link Scanner Console</h2>
+            <h2 class="te-text">🔍 లింక్ వెరిఫికేషన్ ఇంటరాక్టివ్ HUD</h2>
+            
+            <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                Click on the highlighted segments of the fake address below to analyze the malicious tricks hackers use to trap rural parents and merchants.
+            </p>
+            <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                హ్యాకర్లు ప్రజలను మోసం చేయడానికి తయారుచేసే నకిలీ లింక్ లో ఏముంటుందో చూడడానికి క్రింది ముక్కలపై క్లిక్ చేయండి.
+            </p>
+
+            <div class="fake-url-hud">
+                https://<span class="url-seg seg-sub" onclick="inspectUrlSegment('sub')">www.onlinesbi</span>.<span class="url-seg seg-dom" onclick="inspectUrlSegment('dom')">update-kyc-verify.in</span><span class="url-seg seg-path" onclick="inspectUrlSegment('path')">/secure/login.php</span>
+            </div>
+
+            <!-- Inspect Subdomain -->
+            <div id="resSub" class="scan-result-box">
+                <h4 class="en-text">💡 Section: Subdomain Simulation</h4>
+                <h4 class="te-text">💡 విభాగం: సబ్‌డొమైన్ మోసం</h4>
+                <p class="en-text"><strong>Analysis:</strong> Scammers write trusted brand names like "onlinesbi" at the start to fool your eyes. However, the first letters in a URL do not dictate the real host. It is just a path name.</p>
+                <p class="te-text"><strong>విశ్లేషణ:</strong> లింక్ చూడగానే నమ్మకం కలిగించడానికి హ్యాకర్లు మొదట 'onlinesbi' అని రాస్తారు. కానీ లింక్ మొదట్లో ఉన్న పేరు అసలు వెబ్‌సైట్ కాదు, అది కేవలం ఒక నకిలీ పేరు మాత్రమే.</p>
+            </div>
+
+            <!-- Inspect Domain -->
+            <div id="resDom" class="scan-result-box" style="border-left-color: var(--accent-red);">
+                <h4 class="en-text" style="color: var(--accent-red);">❌ Section: The Real Root Domain (The Trap)</h4>
+                <h4 class="te-text" style="color: var(--accent-red);">❌ విభాగం: అసలు హోస్ట్ డొమైన్ (ఇక్కడే మోసం ఉంది)</h4>
+                <p class="en-text"><strong>Analysis:</strong> The actual website is determined strictly by the domain preceding the top-level extension (e.g. '.in', '.com'). Here, the real host is <strong>update-kyc-verify.in</strong>—a domain purchased by a hacker for ₹500 to capture your bank password logins.</p>
+                <p class="te-text"><strong>విశ్లేషణ:</strong> అసలు డొమైన్ అంటే '.in' లేదా '.com' కి ముందు ఉండే పదం. ఇక్కడ నిజమైన వెబ్‌సైట్ <strong>update-kyc-verify.in</strong>. ఇది ఒక హ్యాకర్ కేవలం రూ. 500 పెట్టి కొని, మీ బ్యాంకింగ్ వివరాలు దొంగిలించడానికి వాడే ఒక నకిలీ అడ్రస్.</p>
+            </div>
+
+            <!-- Inspect Path -->
+            <div id="resPath" class="scan-result-box">
+                <h4 class="en-text">💡 Section: Directory Resource Path</h4>
+                <h4 class="te-text">💡 విభాగం: ఫైల్ డైరెక్టరీ పాత్</h4>
+                <p class="en-text"><strong>Analysis:</strong> Folder paths like "/secure/login.php" are simply internal directories structured on the hacker's server. They use words like "secure" to fake credibility, even though the connection leads directly to a threat database.</p>
+                <p class="te-text"><strong>విశ్లేషణ:</strong> చివరన ఉండే '/secure/login.php' అనేది కేవలం హ్యాకర్ సర్వర్ లోని ఫైల్ ఫోల్డర్ లొకేషన్. మిమ్మల్ని నమ్మించడానికి వారు 'secure' అనే పదాలను వాడతారు.</p>
+            </div>
+        </div>
+
+        <!-- Myth Buster Matrix -->
+        <div class="myth-section">
+            <h2 class="en-text">🧠 Cyber Safety Myth Buster</h2>
+            <h2 class="te-text">🧠 అపోహలు మరియు వాస్తవాలు (Myth Buster)</h2>
+            
+            <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                Rural households hold several safety misconceptions. Click each card to reveal the critical reality.
+            </p>
+            <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                ఇంటర్నెట్ పై ప్రజల్లో ఉండే నమ్మకాలు తప్పు అని నిరూపించే వాస్తవాలను చూడడానికి క్రింది కార్డులపై క్లిక్ చేయండి.
+            </p>
+
+            <div class="myth-grid">
+                <!-- Myth Card 1 -->
+                <div class="myth-card" onclick="flipMythCard(this)">
+                    <h3>
+                        <span class="en-text">Myth: "I have app lockers, so bank accounts are secure."</span>
+                        <span class="te-text">అపోహ: "నా మొబైల్ కు ఫింగర్‌ప్రింట్ లాక్ ఉంది కాబట్టి హ్యాక్ అవ్వదు."</span>
+                    </h3>
+                    <div class="myth-answer">
+                        <span class="en-text">🛑 Reality: Biometrics protect against local phone thefts, but not if you voluntarily read your OTP or security PIN to scammers who dial your number.</span>
+                        <span class="te-text">🛑 వాస్తవం: మొబైల్ లాక్ అనేది మీ ఫోన్ ఎవరో దొంగిలిస్తే రక్షణ ఇస్తుంది, కానీ మీ చేతులతో మీరే ఓటిపి లేదా పిన్ నెంబర్ ఫోన్ కాల్ లో చెప్తే ఫోన్ లాక్ ఏ రక్షణ ఇవ్వలేదు.</span>
+                    </div>
+                </div>
+
+                <!-- Myth Card 2 -->
+                <div class="myth-card" onclick="flipMythCard(this)">
+                    <h3>
+                        <span class="en-text">Myth: "If they know my Aadhaar or name, they must be bank officials."</span>
+                        <span class="te-text">అపోహ: "ఫోన్ చేసిన వ్యక్తి నా పేరు, ఆధార్ నెంబర్ చెప్తే అతను బ్యాంక్ ఉద్యోగే."</span>
+                    </h3>
+                    <div class="myth-answer">
+                        <span class="en-text">🛑 Reality: Scammers harvest baseline customer metadata from leaked public registries, voter databases, and local registers to manufacture trust protocols.</span>
+                        <span class="te-text">🛑 వాస్తవం: హ్యాకర్లు ఓటరు జాబితాలు, బయట లీకైన డేటా బేస్ల ద్వారా మీ పేరు మరియు ఇతర వివరాలను ముందే సేకరించి మీకు ఫోన్ చేసి నిజమైన బ్యాంక్ సిబ్బందిగా నటిస్తారు.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Central State Variables ---
+        let currentFilter = "all";
+
+        // --- Language Switch Handler ---
+        const langToggle = document.getElementById('langToggle');
+        langToggle.addEventListener('change', () => {
+            if (langToggle.checked) {
+                document.body.className = 'lang-te';
+            } else {
+                document.body.className = 'lang-en';
+            }
+            // Reset search input and search display
+            document.getElementById('threatSearch').value = '';
+            executeSearch();
+        });
+
+        // --- Filter Application ---
+        function applyFilter(category, element) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            currentFilter = category;
+            
+            executeSearch();
+        }
+
+        // --- Search & Filter Combined Execution ---
+        function executeSearch() {
+            const query = document.getElementById('threatSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.threat-card');
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                
+                // Extract searchable text based on language class
+                const isTelugu = document.body.classList.contains('lang-te');
+                let searchableText = "";
+                if (isTelugu) {
+                    searchableText = card.querySelector('.te-text').textContent.toLowerCase();
+                } else {
+                    searchableText = card.querySelector('.en-text').textContent.toLowerCase();
+                }
+
+                const matchesFilter = (currentFilter === "all" || category === currentFilter);
+                const matchesQuery = searchableText.includes(query);
+
+                if (matchesFilter && matchesQuery) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- URL Scanner inspection ---
+        function inspectUrlSegment(type) {
+            document.querySelectorAll('.scan-result-box').forEach(box => box.style.display = 'none');
+            if(type === 'sub') document.getElementById('resSub').style.display = 'block';
+            if(type === 'dom') document.getElementById('resDom').style.display = 'block';
+            if(type === 'path') document.getElementById('resPath').style.display = 'block';
+        }
+
+        // --- Myth Buster Flip logic ---
+        function flipMythCard(element) {
+            element.classList.toggle('solved');
+            const ans = element.querySelector('.myth-answer');
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+            } else {
+                ans.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact & Incident Action Hub</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(6, 182, 212, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Bilingual Toggle Mechanics */
+        body.lang-en .te-text { display: none !important; }
+        body.lang-te .en-text { display: none !important; }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lang-switch-wrapper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--accent-cyan);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+            background-color: #ffffff;
+        }
+
+        .lang-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Golden Hour Banner with Danger Stripes */
+        .golden-hour-banner {
+            background: repeating-linear-gradient(45deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.08) 10px, rgba(239, 68, 68, 0.15) 10px, rgba(239, 68, 68, 0.15) 20px);
+            border: 2px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+
+        .helpline-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--accent-red);
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+            margin: 0.75rem 0;
+        }
+
+        /* Layout Columns */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 800px) {
+            .layout-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .full-width {
+                grid-column: span 2;
+            }
+        }
+
+        .panel {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 20px var(--border-glow);
+        }
+
+        .panel h3 {
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 5px rgba(6, 182, 212, 0.1);
+        }
+
+        /* Form Custom Elements */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+        .btn-action {
+            display: inline-block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--accent-cyan);
+            color: #0f172a;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            opacity: 0.9;
+        }
+
+        /* Survival Checklist Track */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+            cursor: pointer;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+
+        .progress-indicator {
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            margin-top: 1.5rem;
+        }
+
+        /* Pre-drafted SOS messages */
+        .sos-wrapper {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sos-text {
+            background: #000000;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: monospace;
+            color: var(--accent-green);
+            margin-bottom: 0.75rem;
+            white-space: pre-wrap;
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-cyan);
+            color: #0f172a;
+            border-color: var(--accent-cyan);
+        }
+
+        /* Output Window */
+        #reportConsole {
+            display: none;
+            background: #000000;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-family: monospace;
+            color: #34d399;
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        /* Custom Modal HUD */
+        .modal-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-box h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .modal-box p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="lang-en">
+
+    <div class="container">
+        <!-- Interactive Header Node -->
+        <header>
+            <div class="lang-switch-wrapper">
+                <span class="lang-label">EN</span>
+                <label class="switch">
+                    <input type="checkbox" id="langToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="lang-label">తెలుగు</span>
+            </div>
+            
+            <h1 class="en-text">🛡️ Cyber Incident Response Hub</h1>
+            <h1 class="te-text">🛡️ సైబర్ క్రైమ్ అత్యవసర సహాయ కేంద్రం</h1>
+            
+            <p class="en-text">Secure reporting templates, localized feedback forms, and immediate Golden-Hour checklists.</p>
+            <p class="te-text">ఫిర్యాదు నమూనాలు, స్థానిక సలహా ఫారాలు మరియు అత్యవసర రక్షణ చర్యల సమగ్ర వేదిక.</p>
+        </header>
+
+        <!-- Golden Hour Incident Banner -->
+        <div class="golden-hour-banner">
+            <h2 class="en-text">💸 Under Active Attack? Contain the Threat!</h2>
+            <h2 class="te-text">💸 అప్పుడే మోసపోయారా? తక్షణ రక్షణ పొందండి!</h2>
+            
+            <p class="en-text" style="margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9;">
+                If your money was stolen in the last 2 hours, call the central government helpline immediately to lock destination accounts:
+            </p>
+            <p class="te-text" style="margin-top: 0.5rem; font-size: 1.1rem; opacity: 0.9;">
+                గడిచిన 2 గంటల్లో మీ అకౌంట్ నుండి ఎవరైనా మోసపూరితంగా డబ్బులు లాక్కుంటే, వెంటనే క్రింది నెంబర్ కు కాల్ చేయండి:
+            </p>
+
+            <div class="helpline-number">1930</div>
+            
+            <p style="font-size: 0.95rem;">
+                <span class="en-text">Or report online inside the central database:</span>
+                <span class="te-text">లేదా ఆన్‌లైన్‌లో కేంద్ర ప్రభుత్వ వెబ్‌సైట్‌లో ఫిర్యాదు చేయండి:</span>
+                <a href="https://cybercrime.gov.in" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; margin-left: 5px;">cybercrime.gov.in</a>
+            </p>
+        </div>
+
+        <div class="layout-grid">
+            
+            <!-- Panel 1: Secure Feedback Form -->
+            <div class="panel">
+                <h3 class="en-text">📬 Direct Connection Terminal</h3>
+                <h3 class="te-text">📬 సంప్రదింపు వేదిక</h3>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+                    Submit verification requests to our CSP project group, report weird scam links, or schedule safety camps for your area.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+                    మా టీమ్ ద్వారా ఒక నకిలీ లింక్ ని పరీక్షించడానికి లేదా మీ గ్రామాల్లో అవగాహన సదస్సులు ఏర్పాటు చేయడానికి ఈ ఫారాన్ని నింపండి.
+                </p>
+
+                <!-- Connected to Formspree for real transactional delivery -->
+                <form action="https://formspree.io/f/YOUR_FORMSPREE_CODE" method="POST" onsubmit="interceptFormSubmission(event)">
+                    <div class="form-group">
+                        <label class="en-text">Full Identity Name</label>
+                        <label class="te-text">పూర్తి పేరు</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g., Salman" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="en-text">Contact Coordinates (Phone/Email)</label>
+                        <label class="te-text">ఫోన్ నెంబర్ లేదా ఈమెయిల్</label>
+                        <input type="text" name="contact" class="form-control" placeholder="e.g., +91 94945 82397" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="en-text">Your Inquiry Payload / Scam Link</label>
+                        <label class="te-text">సন্দేశం లేదా నకిలీ మెసేజ్ వివరాలు</label>
+                        <textarea name="message" rows="4" class="form-control" placeholder="Paste suspected WhatsApp messages or link paths here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-action">
+                        <span class="en-text">Transmit Encrypted Form</span>
+                        <span class="te-text">వివరాలను పంపండి</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Panel 2: Golden Hour Checklist HUD -->
+            <div class="panel">
+                <h3 class="en-text">⚡ Golden Hour Survival Protocols</h3>
+                <h3 class="te-text">⚡ గోల్డెన్ అవర్ అత్యవసర రక్షణ పనులు</h3>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+                    Execute these checklists systematically to arrest further system exploitation.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+                    మరింత నష్టం జరగకుండా మీ అకౌంట్లను త్వరగా రక్షించుకోవడానికి క్రింది స్టెప్స్ పూర్తి చేయండి.
+                </p>
+
+                <div class="checklist-wrapper">
+                    <label class="checklist-item">
+                        <input type="checkbox" class="survival-task" onclick="updateSurvivalProgress()">
+                        <span class="en-text">1. Temporarily freeze UPI/GPay apps & Credit Cards.</span>
+                        <span class="te-text">1. గూగుల్ పే, ఫోన్ పే యాప్స్ ని బ్యాంక్ యాప్ ద్వారా లాక్ చేయండి.</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" class="survival-task" onclick="updateSurvivalProgress()">
+                        <span class="en-text">2. Place voice call to 1930 Cyber Bureau immediately.</span>
+                        <span class="te-text">2. వెంటనే 1930 హెల్ప్‌లైన్‌కు ఫోన్ చేసి ఫిర్యాదు నమోదు చేయండి.</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" class="survival-task" onclick="updateSurvivalProgress()">
+                        <span class="en-text">3. Uninstall screen sharing tools (AnyDesk/TeamViewer).</span>
+                        <span class="te-text">3. ఫోన్ లోని రిమోట్ షేరింగ్ యాప్స్ (AnyDesk) వెంటనే తీసివేయండి.</span>
+                    </label>
+                    <label class="checklist-item">
+                        <input type="checkbox" class="survival-task" onclick="updateSurvivalProgress()">
+                        <span class="en-text">4. Initiate credential reset on compromised emails.</span>
+                        <span class="te-text">4. మీ ఈమెయిల్ మరియు సోషల్ మీడియా పాస్‌వర్డ్‌లను మార్చండి.</span>
+                    </label>
+                </div>
+
+                <div class="progress-indicator" id="survivalProgress">
+                    <span class="en-text">Defensive Posture Score: 0% Protected</span>
+                    <span class="te-text">రక్షణ స్థాయి: 0% సురక్షితం</span>
+                </div>
+            </div>
+
+            <!-- Panel 3: Dynamic Complaint Manifest Generator -->
+            <div class="panel full-width">
+                <h3 class="en-text">📝 Cyber Complaint Manifest Generator</h3>
+                <h3 class="te-text">📝 సైబర్ కంప్లైంట్ రిపోర్ట్ జనరేటర్</h3>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    To report a scam at a police station or on <i>cybercrime.gov.in</i>, you must supply formal transaction details. Fill in the data blocks below to compile a perfectly formatted complaint template instantly.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    సైబర్ స్టేషన్‌లో లేదా ఆన్‌లైన్ లో ఫిర్యాదు చేయడానికి సరైన సమాచారం అవసరం. క్రింది ఖాళీలను పూరించి ఒక అద్భుతమైన రిపోర్ట్ ఫార్మాట్‌ను ఉచితంగా తయారు చేసుకోండి.
+                </p>
+
+                <div class="layout-grid" style="margin-bottom: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <div class="form-group">
+                        <label class="en-text">Financial Volume Lost (₹)</label>
+                        <label class="te-text">నష్టపోయిన మొత్తం (రూపాయల్లో)</label>
+                        <input type="number" id="scamVolume" class="form-control" placeholder="e.g., 8500">
+                    </div>
+                    <div class="form-group">
+                        <label class="en-text">Scam Channel Layer</label>
+                        <label class="te-text">మోసం జరిగిన విధానం</label>
+                        <select id="scamLayer" class="form-control">
+                            <option value="PhonePe/Google Pay Gateway">UPI Transfer (GPay / PhonePe)</option>
+                            <option value="Telegram Task Pipeline">Telegram Part-time Rating Job</option>
+                            <option value="AnyDesk Screen Hijack">AnyDesk Electricity Bill Hijack</option>
+                            <option value="Vishing Network Call">Fake OTP Verification Phone Call</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="en-text">Scammer Address / Phone ID</label>
+                        <label class="te-text">మోసగాడి ఫోన్ నెంబర్ / UPI ఐడీ</label>
+                        <input type="text" id="scamIdentifier" class="form-control" placeholder="Number or UPI address">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn-action" style="flex: 1; background: var(--accent-green);" onclick="generateComplaintReport()">
+                        <span class="en-text">Compile Manifest Report</span>
+                        <span class="te-text">రిపోర్ట్ సిద్ధం చేయండి</span>
+                    </button>
+                    <button class="btn-action" id="copyBtn" style="flex: 1; background: var(--accent-purple); display: none;" onclick="copyComplaintToClipboard()">
+                        <span class="en-text">Copy to Clipboard</span>
+                        <span class="te-text">క్లిప్‌బోర్డ్‌కి కాపీ చేయండి</span>
+                    </button>
+                    <button class="btn-action" id="downloadBtn" style="flex: 1; background: var(--accent-cyan); display: none;" onclick="downloadComplaintFile()">
+                        <span class="en-text">Download Plain Text File</span>
+                        <span class="te-text">ఫైల్ రూపంలో డౌన్‌లోడ్ చేయండి</span>
+                    </button>
+                </div>
+
+                <div id="reportConsole"></div>
+            </div>
+
+            <!-- Panel 4: Emergency SOS Offline Comms Pack -->
+            <div class="panel full-width">
+                <h3 class="en-text">📱 Emergency Offline Comms Pack</h3>
+                <h3 class="te-text">📱 అత్యవసర ఆఫ్-లైన్ మెసేజ్ ప్యాక్</h3>
+                
+                <p class="en-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    In cases of SIM Swap or Mobile Network Hijack, your internet will fail. Use these quick messages to warn your family or alert your bank via SMS.
+                </p>
+                <p class="te-text" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    మీ నెట్‌వర్క్ లేదా సిమ్ కార్డు ఎవరైనా బ్లాక్ చేస్తే, మీ ఇంటర్నెట్ ఆగిపోతుంది. అలాంటి సమయంలో మీ బంధువులను లేదా బ్యాంక్ ను ఆఫ్-లైన్ SMS ద్వారా అప్రమత్తం చేయడానికి ఈ క్రింది మెసేజ్లను వాడండి.
+                </p>
+
+                <div class="layout-grid">
+                    <!-- SOS Card 1 -->
+                    <div class="sos-wrapper">
+                        <h4 style="color: var(--accent-red); margin-bottom: 0.5rem;">
+                            <span class="en-text">Option A: Emergency Alert to Family</span>
+                            <span class="te-text">ఆప్షన్ A: బంధువులకు పంపే మెసేజ్</span>
+                        </h4>
+                        <div class="sos-text" id="sosFamilyText">ALERT: My mobile banking or SIM card may be compromised. If you receive any calls/messages from my number requesting urgent money transfers, DO NOT send cash. Verify directly.</div>
+                        <button class="btn-copy" onclick="copySosText('sosFamilyText', this)">Copy SMS</button>
+                    </div>
+
+                    <!-- SOS Card 2 -->
+                    <div class="sos-wrapper">
+                        <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;">
+                            <span class="en-text">Option B: SMS Request to Block Net Banking</span>
+                            <span class="te-text">ఆప్షన్ B: బ్యాంకుకు పంపే ఎమర్జెన్సీ మెసేజ్</span>
+                        </h4>
+                        <div class="sos-text" id="sosBankText">BLOCK NETBANKING. Urgently request temporary hold on accounts tied to this mobile number due to critical security breach. Please process instantly.</div>
+                        <button class="btn-copy" onclick="copySosText('sosBankText', this)">Copy SMS</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Custom Modal Window instead of Alert -->
+    <div class="modal-screen" id="feedbackModal">
+        <div class="modal-box">
+            <h3 class="en-text">📡 Transmission Successful</h3>
+            <h3 class="te-text">📡 సమాచారం పంపబడింది</h3>
+            <p class="en-text">Your message payload has been successfully registered on the project servers. Our CSP development group will analyze your request and reach out shortly.</p>
+            <p class="te-text">మీ సందేహం విజయవంతంగా ప్రాజెక్ట్ సర్వర్లకు చేరింది. మా టీమ్ ఈ వివరాలను పరిశీలించి త్వరలోనే మిమ్మల్ని సంప్రదిస్తుంది.</p>
+            <button class="btn-action" onclick="closeFeedbackModal()">
+                <span class="en-text">Close Portal Connection</span>
+                <span class="te-text">మూసివేయండి</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- STREAMING_CHUNK: Initializing language toggle states... ---
+        // --- Language Toggle Engine ---
+        const langToggle = document.getElementById('langToggle');
+        langToggle.addEventListener('change', () => {
+            if (langToggle.checked) {
+                document.body.className = 'lang-te';
+            } else {
+                document.body.className = 'lang-en';
+            }
+            updateSurvivalProgress();
+        });
+
+        // --- STREAMING_CHUNK: Implementing dynamic checklist scoring engine... ---
+        // --- Checklist Progress Handler ---
+        function updateSurvivalProgress() {
+            const tasks = document.querySelectorAll('.survival-task');
+            let completed = 0;
+            tasks.forEach(t => { if(t.checked) completed++; });
+            const progressPct = Math.round((completed / tasks.length) * 100);
+            
+            const display = document.getElementById('survivalProgress');
+            const isTelugu = document.body.classList.contains('lang-te');
+
+            if (isTelugu) {
+                display.innerHTML = `రక్షణ స్థాయి: ${progressPct}% సురక్షితం`;
+            } else {
+                display.innerHTML = `Defensive Posture Score: ${progressPct}% Protected`;
+            }
+        }
+
+        // --- STREAMING_CHUNK: Coding dynamic police manifest generator logic... ---
+        // --- Complaint Report compiler ---
+        let compiledReportText = "";
+
+        function generateComplaintReport() {
+            const amount = document.getElementById('scamVolume').value || "[AMOUNT]";
+            const platform = document.getElementById('scamLayer').value;
+            const traceId = document.getElementById('scamIdentifier').value || "[SCAMMER IDENTIFIER]";
+            
+            const timestamp = new Date().toLocaleDateString();
+
+            compiledReportText = `CYBER CRIME INCIDENT REPORT MANIFEST
+Report Compilation Date: ${timestamp}
+------------------------------------------------------------
+To the Cyber Security Investigative Officer,
+
+I am writing to formally log a financial security incident. I fell victim to a social engineering operation hosted on the following channel platform: ${platform}.
+
+Scammer Network Details:
+- Traceable Scammer Address/Phone Number: ${traceId}
+- Capital Volume Stolen: INR ₹${amount}
+
+Under deceptive pressure, the attacker gained leverage over my personal profiles, and an unauthorized transfer was processed. I request immediate tracking of the recipient banking node to freeze the stolen funds.
+
+Transaction Reference ID: [PASTE TRANSACTION REFERENCE / UTR ID HERE]
+Victim Bank Network Name: [ENTER YOUR BANK NAME]
+------------------------------------------------------------
+*Copy this formatted text, fill in the bracketed metadata, and file a report directly at cybercrime.gov.in*`;
+
+            const consoleElement = document.getElementById('reportConsole');
+            consoleElement.textContent = compiledReportText;
+            consoleElement.style.display = 'block';
+
+            document.getElementById('copyBtn').style.display = 'inline-block';
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+        }
+
+        // --- STREAMING_CHUNK: Configuring clipboard copy helper functions... ---
+        // --- Copy to Clipboard handler ---
+        function copyComplaintToClipboard() {
+            if (!compiledReportText) return;
+            
+            // Temporary dummy textarea to bypass browser sandbox limitations
+            const tempBox = document.createElement('textarea');
+            tempBox.value = compiledReportText;
+            document.body.appendChild(tempBox);
+            tempBox.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempBox);
+
+            const copyBtn = document.getElementById('copyBtn');
+            const isTelugu = document.body.classList.contains('lang-te');
+            
+            copyBtn.textContent = isTelugu ? "కాపీ చేయబడింది! ✓" : "Copied! ✓";
+            setTimeout(() => {
+                copyBtn.textContent = isTelugu ? "క్లిప్‌బోర్డ్‌కి కాపీ చేయండి" : "Copy to Clipboard";
+            }, 1500);
+        }
+
+        // --- Plain text downloader handler ---
+        function downloadComplaintFile() {
+            if (!compiledReportText) return;
+            const blob = new Blob([compiledReportText], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const dummyLink = document.createElement('a');
+            dummyLink.href = url;
+            dummyLink.download = "cyber_complaint_report.txt";
+            document.body.appendChild(dummyLink);
+            dummyLink.click();
+            document.body.removeChild(dummyLink);
+        }
+
+        // --- Copy SOS Messages handler ---
+        function copySosText(id, element) {
+            const copyText = document.getElementById(id).textContent;
+            const tempBox = document.createElement('textarea');
+            tempBox.value = copyText;
+            document.body.appendChild(tempBox);
+            tempBox.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempBox);
+
+            const origText = element.textContent;
+            element.textContent = "Copied! ✓";
+            setTimeout(() => { element.textContent = origText; }, 1500);
+        }
+
+        // --- Form Submission Overrides ---
+        function interceptFormSubmission(event) {
+            event.preventDefault(); // Stop normal redirection
+            document.getElementById('feedbackModal').style.display = 'flex';
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
