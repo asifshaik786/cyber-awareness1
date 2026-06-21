@@ -136,7 +136,8 @@ button {
 <div class="panel">
   <div class="title">🔐 PASSWORD ENTROPY ENGINE</div>
 
-  <input id="pwd" type="text" oninput="entropy()" placeholder="Enter secure key">
+  <!-- FIXED: password hidden properly -->
+  <input id="pwd" type="password" oninput="entropy()" placeholder="Enter secure key">
 
   <div class="bar">
     <div id="fill" class="fill"></div>
@@ -150,6 +151,7 @@ button {
   <div class="title">⚠ LIVE SCAM INTELLIGENCE STREAM</div>
 
   <button onclick="addThreat()">Inject Threat Signal</button>
+
   <div class="stream" id="stream">
     <div class="msg">System online — monitoring cyber threats...</div>
   </div>
@@ -213,7 +215,7 @@ function addThreat() {
   stream.prepend(msg);
 }
 
-/* QA SYSTEM (FIXED VERSION) */
+/* QA SYSTEM */
 function runQA() {
   const qa = document.getElementById("qa");
 
@@ -244,3 +246,6 @@ function runQA() {
 }
 
 </script>
+
+</body>
+</html>
