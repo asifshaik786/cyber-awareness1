@@ -305,7 +305,6 @@ function checkAnswer(btn){
 if(btn.innerText === quizData[currentQuestion].answer){
 quizScore++;
 }
-
 currentQuestion++;
 
 if(currentQuestion < quizData.length){
