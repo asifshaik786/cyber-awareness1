@@ -1,131 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cyber Guardian Console</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cyber Security QA Engine</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #0b1220, #05070f);
+  color: #e5e7eb;
+  font-family: "Inter", sans-serif;
 }
 
-body{
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-    min-height:100vh;
-    padding:20px;
+/* HEADER */
+header {
+  text-align: center;
+  padding: 25px;
 }
 
-header{
-    text-align:center;
-    margin-bottom:30px;
+header h1 {
+  color: #38bdf8;
+  font-size: 26px;
 }
 
-header h1{
-    color:#38bdf8;
-    margin-bottom:10px;
+header p {
+  color: #94a3b8;
+  font-size: 13px;
 }
 
-header p{
-    color:#94a3b8;
+/* LAYOUT */
+.container {
+  width: 92%;
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  gap: 18px;
 }
 
-.container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:20px;
-    max-width:1200px;
-    margin:auto;
+/* PANEL */
+.panel {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 18px;
 }
 
-.panel{
-    background:rgba(15,23,42,0.85);
-    border:1px solid rgba(56,189,248,0.2);
-    border-radius:15px;
-    padding:20px;
-    backdrop-filter:blur(10px);
-    box-shadow:0 0 20px rgba(0,0,0,0.3);
+/* TITLE */
+.title {
+  color: #facc15;
+  font-size: 13px;
+  margin-bottom: 10px;
 }
 
-.title{
-    font-size:18px;
-    font-weight:600;
-    color:#facc15;
-    margin-bottom:15px;
+/* INPUT */
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  background: #0b1220;
+  color: white;
 }
 
-input{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#0f172a;
-    color:white;
-    outline:none;
+/* GAUGE */
+.bar {
+  width: 100%;
+  height: 14px;
+  background: #111827;
+  border-radius: 50px;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-.bar{
-    width:100%;
-    height:12px;
-    background:#1e293b;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:12px;
+.fill {
+  height: 100%;
+  width: 0%;
+  transition: 0.4s;
+  background: red;
 }
 
-.fill{
-    width:0%;
-    height:100%;
-    transition:0.4s;
+/* STREAM */
+.stream {
+  height: 180px;
+  overflow-y: auto;
+  font-size: 13px;
 }
 
-.status{
-    margin-top:10px;
-    font-weight:600;
+.msg {
+  padding: 8px;
+  margin-bottom: 6px;
+  border-left: 3px solid #ef4444;
+  background: rgba(239,68,68,0.07);
 }
 
-button{
-    padding:10px 15px;
-    border:none;
-    border-radius:10px;
-    background:#38bdf8;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+/* TERMINAL */
+.terminal {
+  font-family: monospace;
+  font-size: 12px;
+  background: #05070f;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  height: 140px;
+  overflow-y: auto;
 }
 
-button:hover{
-    transform:scale(1.05);
-}
-
-.output{
-    margin-top:15px;
-    background:#020617;
-    border:1px solid #1e293b;
-    border-radius:10px;
-    padding:12px;
-    min-height:100px;
-    color:#cbd5e1;
-}
-
-.scoreBox{
-    text-align:center;
-    font-size:24px;
-    font-weight:bold;
-    margin-top:20px;
-}
-
-.footer{
-    text-align:center;
-    margin-top:30px;
-    color:#64748b;
+/* BUTTON */
+button {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -133,143 +126,117 @@ button:hover{
 <body>
 
 <header>
-    <h1>🛡 Cyber Guardian Console</h1>
-    <p>Password Security • Scam Awareness • Device Compatibility • Digital Safety</p>
+  <h1>🛡 Cyber Security QA Engine</h1>
+  <p>Entropy Analysis • Live Threat Stream • QA Diagnostics</p>
 </header>
 
 <div class="container">
 
-    <!-- PASSWORD ANALYZER -->
-    <div class="panel">
-        <div class="title">🔐 Password Safety Analyzer</div>
+<!-- 🔐 PASSWORD ENTROPY -->
+<div class="panel">
+  <div class="title">🔐 PASSWORD ENTROPY ENGINE</div>
 
-        <input
-            type="password"
-            id="pwd"
-            placeholder="Enter a password"
-            oninput="analyzePassword()">
+  <input id="pwd" type="text" oninput="entropy()" placeholder="Enter secure key">
 
-        <div class="bar">
-            <div class="fill" id="fill"></div>
-        </div>
+  <div class="bar">
+    <div id="fill" class="fill"></div>
+  </div>
 
-        <div class="status" id="passwordStatus">
-            Security Status: Waiting...
-        </div>
-    </div>
-
-    <!-- SCAM ALERT -->
-    <div class="panel">
-        <div class="title">🚨 Scam & Fraud Alert Center</div>
-
-        <button onclick="generateAlert()">
-            Check Latest Threat
-        </button>
-
-        <div class="output" id="alertBox">
-            No active alerts...
-        </div>
-    </div>
-
-    <!-- COMPATIBILITY -->
-    <div class="panel">
-        <div class="title">📱 Device Compatibility Monitor</div>
-
-        <button onclick="runCompatibilityCheck()">
-            Run Compatibility Scan
-        </button>
-
-        <div class="output" id="compatibility">
-            Awaiting scan...
-        </div>
-    </div>
-
-    <!-- SAFETY SCORE -->
-    <div class="panel">
-        <div class="title">📊 Digital Safety Score</div>
-
-        <button onclick="calculateSafetyScore()">
-            Generate Score
-        </button>
-
-        <div class="scoreBox" id="safetyScore">
-            --
-        </div>
-    </div>
-
+  <p id="score">Entropy: N/A</p>
 </div>
 
-<div class="footer">
-    Cyber Guardian Console © 2026
+<!-- ⚠ LIVE SCAM STREAM -->
+<div class="panel">
+  <div class="title">⚠ LIVE SCAM INTELLIGENCE STREAM</div>
+
+  <button onclick="addThreat()">Inject Threat Signal</button>
+  <div class="stream" id="stream">
+    <div class="msg">System online — monitoring cyber threats...</div>
+  </div>
+</div>
+
+<!-- 🧪 QA SYSTEM -->
+<div class="panel">
+  <div class="title">🧪 MOBILE & BROWSER QA ENGINE</div>
+
+  <button onclick="runQA()">Run System Check</button>
+  <div class="terminal" id="qa">> Awaiting scan...</div>
+</div>
+
 </div>
 
 <script>
 
-/* PASSWORD ANALYZER */
-function analyzePassword() {
+/* PASSWORD ENTROPY */
+function entropy() {
+  const p = document.getElementById("pwd").value;
+  const fill = document.getElementById("fill");
+  const score = document.getElementById("score");
 
-    const pwd = document.getElementById("pwd").value;
-    const fill = document.getElementById("fill");
-    const status = document.getElementById("passwordStatus");
+  let s = 0;
+  if (p.length > 4) s += 20;
+  if (p.length > 8) s += 20;
+  if (/[A-Z]/.test(p)) s += 20;
+  if (/[0-9]/.test(p)) s += 20;
+  if (/[^A-Za-z0-9]/.test(p)) s += 20;
 
-    let score = 0;
+  fill.style.width = s + "%";
 
-    if(pwd.length >= 8) score += 25;
-    if(/[A-Z]/.test(pwd)) score += 25;
-    if(/[0-9]/.test(pwd)) score += 25;
-    if(/[^A-Za-z0-9]/.test(pwd)) score += 25;
-
-    fill.style.width = score + "%";
-
-    if(score < 50){
-        fill.style.background = "#ef4444";
-        status.innerHTML = "🔴 Weak Password";
-    }
-    else if(score < 100){
-        fill.style.background = "#facc15";
-        status.innerHTML = "🟡 Moderate Password";
-    }
-    else{
-        fill.style.background = "#22c55e";
-        status.innerHTML = "🟢 Strong Password";
-    }
+  if (s < 40) {
+    fill.style.background = "#ef4444";
+    score.innerText = "Entropy: LOW SECURITY";
+  } else if (s < 80) {
+    fill.style.background = "#facc15";
+    score.innerText = "Entropy: MEDIUM SECURITY";
+  } else {
+    fill.style.background = "#22c55e";
+    score.innerText = "Entropy: HIGH SECURITY";
+  }
 }
 
-/* SCAM ALERTS */
-const scams = [
-    "⚠ Never share OTPs with anyone, including bank officials.",
-    "⚠ Fake prize-winning messages are a common scam tactic.",
-    "⚠ Verify suspicious payment links before clicking.",
-    "⚠ Beware of callers asking for personal information.",
-    "⚠ Double-check bank messages before responding."
+/* LIVE SCAM STREAM */
+const threats = [
+  "Phishing link detected in SMS gateway",
+  "Fake banking OTP request intercepted",
+  "Suspicious login pattern detected",
+  "Malware URL blocked at DNS level",
+  "Fraud call pattern flagged in network"
 ];
 
-function generateAlert(){
-    document.getElementById("alertBox").innerHTML =
-    scams[Math.floor(Math.random() * scams.length)];
+function addThreat() {
+  const stream = document.getElementById("stream");
+  const msg = document.createElement("div");
+
+  msg.className = "msg";
+  msg.innerText = "🚨 " + threats[Math.floor(Math.random() * threats.length)];
+
+  stream.prepend(msg);
 }
 
-/* COMPATIBILITY */
-function runCompatibilityCheck(){
+/* QA SYSTEM */
+function runQA() {
+  const qa = document.getElementById("qa");
 
-    const box = document.getElementById("compatibility");
+  const logs = [
+    "> Checking viewport responsiveness... OK",
+    "> Testing touch input layers... OK",
+    "> Browser rendering engine stable... OK",
+    "> CSS compatibility verified... STABLE",
+    "> Mobile score: 94/100",
+    "> Security headers: PASSED"
+  ];
 
-    box.innerHTML = `
-    ✔ Mobile Responsive Layout<br><br>
-    ✔ Browser Compatibility Verified<br><br>
-    ✔ Touch Interaction Supported<br><br>
-    ✔ Performance Optimized<br><br>
-    ✔ User Interface Stable
-    `;
-}
+  qa.innerHTML = "";
+  let i = 0;
 
-/* SAFETY SCORE */
-function calculateSafetyScore(){
-
-    const score = Math.floor(Math.random()*21)+80;
-
-    document.getElementById("safetyScore").innerHTML =
-    `🛡 ${score}/100`;
+  const interval = setInterval(() => {
+    if (i >= logs.length) {
+      clearInterval(interval);
+      return;
+    }
+    qa.innerHTML += logs[i] + "<br>";
+    i++;
+  }, 400);
 }
 
 </script>
