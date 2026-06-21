@@ -205,15 +205,15 @@ const threats = [
 
 function addThreat() {
   const stream = document.getElementById("stream");
-  const msg = document.createElement("div");
 
+  const msg = document.createElement("div");
   msg.className = "msg";
   msg.innerText = "🚨 " + threats[Math.floor(Math.random() * threats.length)];
 
   stream.prepend(msg);
 }
 
-/* QA SYSTEM */
+/* QA SYSTEM (FIXED VERSION) */
 function runQA() {
   const qa = document.getElementById("qa");
 
@@ -227,19 +227,20 @@ function runQA() {
   ];
 
   qa.innerHTML = "";
-  let i = 0;
 
+  let i = 0;
   const interval = setInterval(() => {
     if (i >= logs.length) {
       clearInterval(interval);
       return;
     }
-    qa.innerHTML += logs[i] + "<br>";
+
+    const line = document.createElement("div");
+    line.innerText = logs[i];
+    qa.appendChild(line);
+
     i++;
   }, 400);
 }
 
 </script>
-
-</body>
-</html>
