@@ -266,3 +266,84 @@ document.addEventListener('DOMContentLoaded', function () {
     loadScenario('otp');
   }
 });
+/* ===== CYBER QUIZ ===== */
+
+const quizData = [
+{
+question:"Should you share your OTP with anyone?",
+options:["Yes","No","Only Bank Staff","Friends"],
+answer:"No"
+},
+{
+question:"Receiving money through UPI requires?",
+options:["PIN","OTP","Nothing","Password"],
+answer:"Nothing"
+},
+{
+question:"What should you do if a stranger asks for money on WhatsApp?",
+options:["Send immediately","Verify first","Share OTP","Ignore warning"],
+answer:"Verify first"
+}
+];
+
+let currentQuestion = 0;
+let quizScore = 0;
+
+function loadQuestion(){
+const question = document.getElementById("question");
+if(!question) return;
+
+question.innerText = quizData[currentQuestion].question;
+
+document.querySelectorAll(".option").forEach((btn,index)=>{
+btn.innerText = quizData[currentQuestion].options[index];
+});
+}
+
+function checkAnswer(btn){
+
+if(btn.innerText === quizData[currentQuestion].answer){
+quizScore++;
+}
+
+currentQuestion++;
+
+if(currentQuestion < quizData.length){
+loadQuestion();
+}else{
+showQuizResult();
+}
+}
+
+function showQuizResult(){
+
+document.getElementById("quiz-box").style.display="none";
+document.getElementById("result").style.display="block";
+
+document.getElementById("score").innerText =
+`Your Score: ${quizScore}/${quizData.length}`;
+
+let badge = "🥉 Cyber Beginner";
+
+if(quizScore === 3){
+badge = "🏆 Cyber Security Expert";
+}
+else if(quizScore >= 2){
+badge = "🥈 Cyber Awareness Champion";
+}
+
+document.getElementById("badge").innerText = badge;
+}
+
+function restartQuiz(){
+
+currentQuestion = 0;
+quizScore = 0;
+
+document.getElementById("quiz-box").style.display="block";
+document.getElementById("result").style.display="none";
+
+loadQuestion();
+}
+
+document.addEventListener("DOMContentLoaded", loadQuestion);
