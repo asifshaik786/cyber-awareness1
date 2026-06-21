@@ -3,72 +3,114 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Security Diagnostics Dashboard</title>
+<title>Cyber Security QA System</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 body {
-  background: #0b1220;
-  color: #e2e8f0;
-  padding: 20px;
+  margin: 0;
+  background: radial-gradient(circle at top, #0b1220, #05070f);
+  color: #e5e7eb;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
+/* HEADER */
 header {
   text-align: center;
-  margin-bottom: 25px;
+  padding: 30px 15px;
 }
 
 header h1 {
+  font-size: 26px;
   color: #38bdf8;
-  font-size: 28px;
+  letter-spacing: 1px;
 }
 
 header p {
   color: #94a3b8;
+  font-size: 13px;
 }
 
-.grid {
+/* MAIN LAYOUT */
+.container {
+  width: 92%;
+  max-width: 1100px;
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  gap: 18px;
 }
 
-/* CARD */
-.card {
-  background: #111827;
-  border-radius: 15px;
+/* GLASS PANEL */
+.panel {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
   padding: 18px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
-/* HEADINGS */
-.card h2 {
-  font-size: 18px;
-  margin-bottom: 12px;
+.title {
+  font-size: 14px;
   color: #facc15;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
-/* PASSWORD GAUGE */
-.gauge {
+/* INPUT */
+input {
   width: 100%;
-  height: 18px;
-  background: #1f2937;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  background: #0b1220;
+  color: white;
+  outline: none;
+}
+
+/* GAUGE */
+.bar {
+  width: 100%;
+  height: 14px;
+  background: #111827;
   border-radius: 50px;
-  overflow: hidden;
   margin-top: 10px;
+  overflow: hidden;
 }
 
 .fill {
   height: 100%;
   width: 0%;
-  background: red;
   transition: 0.5s;
+  background: red;
+}
+
+/* LIVE STREAM */
+.stream {
+  height: 180px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+.msg {
+  padding: 8px;
+  margin-bottom: 6px;
+  border-left: 3px solid #ef4444;
+  background: rgba(239,68,68,0.07);
+}
+
+/* TERMINAL STYLE */
+.terminal {
+  font-family: monospace;
+  font-size: 12px;
+  background: #05070f;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #1f2937;
+  height: 140px;
+  overflow-y: auto;
 }
 
 /* BUTTON */
@@ -76,157 +118,136 @@ button {
   margin-top: 10px;
   padding: 10px 12px;
   border: none;
-  border-radius: 8px;
-  background: #38bdf8;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
   color: black;
   font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  background: #0ea5e9;
+  transform: scale(1.03);
 }
-
-/* ALERT FEED */
-.alert-box {
-  height: 180px;
-  overflow-y: auto;
-  background: #0f172a;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.alert {
-  padding: 8px;
-  margin-bottom: 6px;
-  border-left: 4px solid red;
-  background: rgba(255,0,0,0.08);
-}
-
-/* STATUS */
-.status {
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-.low { color: #22c55e; }
-.medium { color: #facc15; }
-.high { color: #ef4444; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>🛡 Security Diagnostics & QA Dashboard</h1>
-  <p>Real-time Cyber Monitoring System</p>
+  <h1>🛡 Cyber Security QA Engine</h1>
+  <p>Entropy Analysis • Threat Stream • Mobile Browser Compliance</p>
 </header>
 
-<div class="grid">
+<div class="container">
 
   <!-- PASSWORD ENTROPY -->
-  <div class="card">
-    <h2>🔐 Password Entropy Gauge</h2>
-    <p>Enter Password:</p>
-    <input id="password" type="text" oninput="checkStrength()" style="width:100%; padding:8px; border-radius:6px; border:none; margin-top:5px;">
+  <div class="panel">
+    <div class="title">🔐 PASSWORD ENTROPY ANALYZER</div>
+    <input id="pwd" placeholder="Enter secure string..." oninput="entropy()"/>
     
-    <div class="gauge">
+    <div class="bar">
       <div id="fill" class="fill"></div>
     </div>
 
-    <div id="strengthText" class="status">Strength: N/A</div>
-  </div>
-
-  <!-- SCAM ALERT SYSTEM -->
-  <div class="card">
-    <h2>⚠ Live Scam Alert System</h2>
-    <button onclick="generateAlert()">Generate Alert</button>
-
-    <div class="alert-box" id="alertBox">
-      <div class="alert">System initialized... monitoring threats.</div>
+    <div id="score" style="margin-top:8px;font-size:13px;">
+      Status: Awaiting input...
     </div>
   </div>
 
-  <!-- SECURITY DIAGNOSTICS -->
-  <div class="card">
-    <h2>🧪 Security Diagnostics</h2>
-    <button onclick="runDiagnostics()">Run Diagnostics</button>
+  <!-- LIVE SCAM TRACKER -->
+  <div class="panel">
+    <div class="title">⚠ LIVE SCAM TRACKER</div>
+    <button onclick="addThreat()">Inject Threat Signal</button>
 
-    <div id="diagResult" style="margin-top:10px;"></div>
+    <div class="stream" id="stream">
+      <div class="msg">System initialized — monitoring global threat feeds...</div>
+    </div>
+  </div>
+
+  <!-- MOBILE BROWSER QA -->
+  <div class="panel">
+    <div class="title">📱 MOBILE BROWSER COMPATIBILITY QA</div>
+    <button onclick="runQA()">Run Compliance Check</button>
+
+    <div class="terminal" id="qa">
+> Waiting for scan...<br>
+    </div>
   </div>
 
 </div>
 
 <script>
 
-/* PASSWORD STRENGTH */
-function checkStrength() {
-  const pass = document.getElementById("password").value;
+/* PASSWORD ENTROPY */
+function entropy() {
+  const p = document.getElementById("pwd").value;
   const fill = document.getElementById("fill");
-  const text = document.getElementById("strengthText");
+  const score = document.getElementById("score");
 
-  let score = 0;
+  let s = 0;
+  if (p.length > 4) s += 20;
+  if (p.length > 8) s += 20;
+  if (/[A-Z]/.test(p)) s += 20;
+  if (/[0-9]/.test(p)) s += 20;
+  if (/[^A-Za-z0-9]/.test(p)) s += 20;
 
-  if (pass.length > 5) score += 20;
-  if (pass.length > 8) score += 20;
-  if (/[A-Z]/.test(pass)) score += 20;
-  if (/[0-9]/.test(pass)) score += 20;
-  if (/[@$!%*?&]/.test(pass)) score += 20;
+  fill.style.width = s + "%";
 
-  fill.style.width = score + "%";
-
-  if (score <= 40) {
-    fill.style.background = "red";
-    text.innerHTML = "Strength: Weak";
-    text.className = "status high";
-  } else if (score <= 80) {
-    fill.style.background = "orange";
-    text.innerHTML = "Strength: Medium";
-    text.className = "status medium";
+  if (s < 40) {
+    fill.style.background = "#ef4444";
+    score.innerText = "Entropy: LOW SECURITY";
+  } else if (s < 80) {
+    fill.style.background = "#facc15";
+    score.innerText = "Entropy: MEDIUM SECURITY";
   } else {
-    fill.style.background = "limegreen";
-    text.innerHTML = "Strength: Strong";
-    text.className = "status low";
+    fill.style.background = "#22c55e";
+    score.innerText = "Entropy: HIGH SECURITY";
   }
 }
 
-/* SCAM ALERT SYSTEM */
-const alerts = [
-  "Suspicious OTP request detected from unknown source!",
-  "Fake banking SMS link flagged by AI filter!",
-  "Phishing email detected with malicious attachment!",
-  "Unusual login attempt blocked successfully!",
-  "Fraud call pattern identified (bank impersonation)."
+/* LIVE SCAM STREAM */
+const threats = [
+  "Phishing link detected in SMS gateway",
+  "Fake banking OTP request intercepted",
+  "Suspicious login pattern from unknown device",
+  "Malware URL blocked at DNS level",
+  "Fraud voice call pattern flagged"
 ];
 
-function generateAlert() {
-  const box = document.getElementById("alertBox");
-  const msg = alerts[Math.floor(Math.random() * alerts.length)];
+function addThreat() {
+  const stream = document.getElementById("stream");
+  const msg = document.createElement("div");
 
-  const div = document.createElement("div");
-  div.className = "alert";
-  div.innerText = "🚨 " + msg;
+  msg.className = "msg";
+  msg.innerText = "🚨 " + threats[Math.floor(Math.random() * threats.length)];
 
-  box.prepend(div);
+  stream.prepend(msg);
 }
 
-/* DIAGNOSTICS */
-function runDiagnostics() {
-  const result = document.getElementById("diagResult");
+/* QA SIMULATION */
+function runQA() {
+  const qa = document.getElementById("qa");
 
-  const checks = [
-    "Firewall Status: ACTIVE 🟢",
-    "Antivirus Engine: UPDATED 🟢",
-    "Network Scan: SAFE 🟢",
-    "Phishing Filter: ENABLED 🟢"
+  const logs = [
+    "> Checking viewport responsiveness... OK",
+    "> Testing touch input layers... OK",
+    "> Validating browser rendering engine... OK",
+    "> Checking CSS compatibility... STABLE",
+    "> Mobile optimization score: 94/100",
+    "> Security headers simulation: PASSED"
   ];
 
-  let html = "<ul>";
-  checks.forEach(c => html += "<li>" + c + "</li>");
-  html += "</ul>";
+  qa.innerHTML = "";
+  let i = 0;
 
-  result.innerHTML = html;
+  const interval = setInterval(() => {
+    if (i >= logs.length) {
+      clearInterval(interval);
+      return;
+    }
+    qa.innerHTML += logs[i] + "<br>";
+    i++;
+  }, 400);
 }
 
 </script>
