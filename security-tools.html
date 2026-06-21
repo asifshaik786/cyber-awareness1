@@ -3,82 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SOC Cyber Security Engine</title>
+<title>SOC Command Center</title>
 
 <style>
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
   background: #05070f;
   color: #e5e7eb;
-  overflow-x: hidden;
+  font-family: monospace;
+  overflow: hidden;
 }
 
-/* RADAR BACKGROUND */
-.radar {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  border: 2px solid rgba(56,189,248,0.2);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: spin 8s linear infinite;
-  z-index: 0;
-}
-
-.radar::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 1px solid rgba(56,189,248,0.1);
-}
-
-@keyframes spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* HEADER */
-header {
-  text-align: center;
-  padding: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-header h1 {
-  color: #38bdf8;
-}
-
-/* GRID */
+/* GRID LAYOUT */
 .container {
-  width: 92%;
-  max-width: 1100px;
-  margin: auto;
   display: grid;
-  gap: 18px;
-  position: relative;
-  z-index: 2;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 15px;
 }
 
 /* PANEL */
 .panel {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(56,189,248,0.2);
-  padding: 16px;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px;
 }
 
 /* INPUT */
 input {
   width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 8px;
   background: #0b1220;
   border: 1px solid #1f2937;
   color: white;
@@ -86,110 +41,110 @@ input {
 
 /* ENTROPY BAR */
 .bar {
-  height: 12px;
+  height: 10px;
   background: #111827;
-  border-radius: 50px;
-  overflow: hidden;
   margin-top: 8px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .fill {
   height: 100%;
   width: 0%;
-  transition: 0.5s;
+  transition: 0.4s;
 }
 
-/* STREAM */
-.stream {
+/* LOG AREA */
+.log {
   height: 180px;
   overflow-y: auto;
-  font-size: 13px;
-}
-
-.msg {
-  padding: 6px;
-  border-left: 3px solid #ef4444;
-  margin-bottom: 5px;
-  background: rgba(255,0,0,0.05);
-}
-
-/* TERMINAL */
-.terminal {
-  font-family: monospace;
   font-size: 12px;
-  background: #05070f;
-  padding: 10px;
-  height: 140px;
-  overflow-y: auto;
-  border: 1px solid #1f2937;
-  border-radius: 10px;
 }
 
-/* BUTTON */
-button {
-  margin-top: 8px;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
+/* NODE NETWORK */
+.network {
+  position: relative;
+  height: 300px;
+  background: radial-gradient(circle, #0b1220, #05070f);
+  overflow: hidden;
+}
+
+.node {
+  width: 10px;
+  height: 10px;
   background: #38bdf8;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  animation: pulse 1.5s infinite;
 }
 
-/* RISK LABEL */
-.risk {
-  margin-top: 6px;
-  font-weight: bold;
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ATTACK LINE */
+.line {
+  position: absolute;
+  height: 2px;
+  background: red;
+  opacity: 0.6;
+  animation: move 2s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translateX(0); }
+  to { transform: translateX(200px); }
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  color: #38bdf8;
 }
 </style>
 </head>
 
 <body>
 
-<div class="radar"></div>
-
-<header>
-  <h1>🛡 SOC Cyber Security Engine</h1>
-  <p>Real-Time Threat Intelligence • QA Diagnostics • Entropy Analysis</p>
-</header>
+<header>🛡 SOC COMMAND CENTER - LIVE SECURITY GRID</header>
 
 <div class="container">
 
-<!-- PASSWORD -->
+<!-- LEFT PANEL -->
 <div class="panel">
-  🔐 Password Entropy Engine
+  🔐 PASSWORD ENGINE
   <input id="pwd" type="password" oninput="entropy()">
-  <div class="bar"><div id="fill" class="fill"></div></div>
-  <div id="riskLabel" class="risk">Status: Idle</div>
+
+  <div class="bar">
+    <div id="fill" class="fill"></div>
+  </div>
+
+  <div id="risk">Status: IDLE</div>
 </div>
 
-<!-- SCAM STREAM -->
+<!-- RIGHT PANEL -->
 <div class="panel">
-  ⚠ Live Threat Stream
-  <button onclick="startStream()">Start Feed</button>
-  <div class="stream" id="stream"></div>
+  ⚠ THREAT LOG STREAM
+  <div class="log" id="log"></div>
 </div>
 
-<!-- QA -->
-<div class="panel">
-  🧪 System Diagnostics
-  <button onclick="runQA()">Run Scan</button>
-  <div class="terminal" id="qa">> Ready...</div>
+<!-- NETWORK VISUAL -->
+<div class="panel network" id="network">
 </div>
 
 </div>
 
 <script>
 
-/* SYSTEM STATE */
-let systemState = "IDLE";
-
-/* PASSWORD ENGINE (LIVE SYSTEM) */
+/* PASSWORD ENGINE */
 function entropy() {
   const p = document.getElementById("pwd").value;
   const fill = document.getElementById("fill");
-  const risk = document.getElementById("riskLabel");
+  const risk = document.getElementById("risk");
 
   let s = 0;
   if (p.length > 4) s += 20;
@@ -201,89 +156,69 @@ function entropy() {
   fill.style.width = s + "%";
 
   if (s < 40) {
-    systemState = "THREAT";
     fill.style.background = "red";
-    risk.innerText = "⚠ HIGH RISK PASSWORD DETECTED";
-    triggerThreat("Weak credential detected in input layer");
-  }
-  else if (s < 80) {
-    systemState = "WARNING";
+    risk.innerText = "🔴 HIGH RISK";
+    triggerAlert("Weak credential detected");
+  } else if (s < 80) {
     fill.style.background = "orange";
-    risk.innerText = "🟡 MEDIUM SECURITY LEVEL";
-  }
-  else {
-    systemState = "SAFE";
+    risk.innerText = "🟡 MEDIUM RISK";
+  } else {
     fill.style.background = "limegreen";
-    risk.innerText = "🟢 STRONG SECURITY PROFILE";
+    risk.innerText = "🟢 SECURE";
   }
 }
 
-/* LIVE SCAM ENGINE (AUTO MODE) */
+/* THREAT STREAM */
 const threats = [
-  "Phishing SMS pattern detected",
-  "OTP interception attempt blocked",
-  "Suspicious login anomaly detected",
-  "Malware URL quarantined",
-  "Fake banking app signature found"
+  "Phishing attack detected",
+  "OTP spoofing attempt blocked",
+  "Suspicious login anomaly",
+  "Malware signature found",
+  "Fake API request intercepted"
 ];
 
-function startStream() {
-  const stream = document.getElementById("stream");
-
-  setInterval(() => {
-    const msg = document.createElement("div");
-    msg.className = "msg";
-
-    msg.innerText =
-      "🚨 [" + systemState + "] " +
-      threats[Math.floor(Math.random() * threats.length)];
-
-    stream.prepend(msg);
-
-  }, 2000);
+function addLog(text) {
+  const log = document.getElementById("log");
+  const div = document.createElement("div");
+  div.innerText = "🚨 " + text;
+  log.prepend(div);
 }
 
-/* INTELLIGENT THREAT TRIGGER */
-function triggerThreat(text) {
-  const stream = document.getElementById("stream");
+/* AUTO STREAM */
+setInterval(() => {
+  addLog(threats[Math.floor(Math.random() * threats.length)]);
+}, 2000);
 
-  const msg = document.createElement("div");
-  msg.className = "msg";
-
-  msg.innerText = "🚨 CRITICAL: " + text;
-
-  stream.prepend(msg);
+/* ALERT */
+function triggerAlert(msg) {
+  addLog("CRITICAL: " + msg);
 }
 
-/* AUTO QA ENGINE (NO BUTTON NEEDED) */
-window.onload = function runQA() {
-  const qa = document.getElementById("qa");
+/* NETWORK VISUAL */
+const network = document.getElementById("network");
 
-  const logs = [
-    "Initializing SOC Engine...",
-    "Loading threat database...",
-    "Checking browser integrity...",
-    "Validating CSS render pipeline...",
-    "Mobile compliance: OK",
-    "System status: ACTIVE"
-  ];
+/* CREATE NODES */
+for (let i = 0; i < 12; i++) {
+  const node = document.createElement("div");
+  node.className = "node";
+  node.style.top = Math.random() * 280 + "px";
+  node.style.left = Math.random() * 400 + "px";
+  network.appendChild(node);
+}
 
-  let i = 0;
+/* ATTACK LINES */
+setInterval(() => {
+  const line = document.createElement("div");
+  line.className = "line";
+  line.style.top = Math.random() * 300 + "px";
+  line.style.left = "0px";
 
-  const interval = setInterval(() => {
-    if (i >= logs.length) {
-      clearInterval(interval);
-      return;
-    }
+  network.appendChild(line);
 
-    const line = document.createElement("div");
-    line.innerText = logs[i];
-    qa.appendChild(line);
-
-    i++;
-  }, 500);
-};
+  setTimeout(() => line.remove(), 2000);
+}, 1500);
 
 </script>
+
 </body>
 </html>
