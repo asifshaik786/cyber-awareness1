@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Tools - CyberSafe Kadapa</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f7fc;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:#fff;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+color:#0f3b68;
+}
+
+.section{
+margin-bottom:40px;
+}
+
+h2{
+margin-bottom:15px;
+color:#0f3b68;
+}
+
+input{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:16px;
+}
+
+.meter{
+height:12px;
+background:#ddd;
+border-radius:10px;
+margin-top:15px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+width:0%;
+transition:0.3s;
+}
+
+#strengthText{
+margin-top:10px;
+font-weight:bold;
+}
+
+.alert-box{
+background:#fff3cd;
+padding:15px;
+margin:12px 0;
+border-left:5px solid #ff9800;
+border-radius:8px;
+}
+
+.footer{
+text-align:center;
+margin-top:30px;
+color:#666;
+}
+
+@media(max-width:768px){
+.container{
+padding:20px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛡️ Security Tools Center</h1>
+
+<div class="section">
+
+<h2>🔐 Password Strength Checker</h2>
+
+<input
+type="password"
+id="password"
+placeholder="Enter your password">
+
+<div class="meter">
+<div class="fill" id="fill"></div>
+</div>
+
+<p id="strengthText">Enter a password</p>
+
+</div>
+
+<div class="section">
+
+<h2>🚨 Live Scam Alerts</h2>
+
+<div class="alert-box">
+⚠️ OTP Fraud Alert: Banks never ask for OTP through calls or messages.
+</div>
+
+<div class="alert-box">
+⚠️ UPI Alert: Receiving money never requires entering your UPI PIN.
+</div>
+
+<div class="alert-box">
+⚠️ WhatsApp Scam Alert: Verify unknown requests before sending money.
+</div>
+
+<div class="alert-box">
+⚠️ Cyber Emergency: Report fraud immediately at 1930 or cybercrime.gov.in.
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>✅ Security Diagnostics</h2>
+
+<ul>
+<li>✔ Strong Password Usage</li>
+<li>✔ Scam Awareness Monitoring</li>
+<li>✔ Safe Digital Practices</li>
+<li>✔ Mobile-Friendly Security Tools</li>
+</ul>
+
+</div>
+
+<div class="footer">
+<p>CyberSafe Kadapa - Security Diagnostics & Quality Assurance Module</p>
+</div>
+
+</div>
+
+<script>
+
+const password =
+document.getElementById("password");
+
+const fill =
+document.getElementById("fill");
+
+const strengthText =
+document.getElementById("strengthText");
+
+password.addEventListener("input",()=>{
+
+let value=password.value;
+
+if(value.length < 6){
+
+fill.style.width="30%";
+fill.style.background="red";
+strengthText.innerHTML="🔴 Weak Password";
+
+}
+
+else if(value.length < 10){
+
+fill.style.width="60%";
+fill.style.background="orange";
+strengthText.innerHTML="🟡 Medium Password";
+
+}
+
+else{
+
+fill.style.width="100%";
+fill.style.background="green";
+strengthText.innerHTML="🟢 Strong Password";
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
