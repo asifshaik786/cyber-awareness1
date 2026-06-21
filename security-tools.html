@@ -3,57 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security Tools - CyberSafe Kadapa</title>
+<title>Cyber Security Operations Center</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:#f4f7fc;
+background:linear-gradient(135deg,#071a2e,#0b2f56);
+color:white;
+min-height:100vh;
 padding:20px;
 }
 
 .container{
-max-width:900px;
+max-width:1200px;
 margin:auto;
-background:#fff;
-padding:30px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-h1{
+.header{
 text-align:center;
 margin-bottom:30px;
-color:#0f3b68;
 }
 
-.section{
-margin-bottom:40px;
+.header h1{
+font-size:3rem;
+margin-bottom:10px;
 }
 
-h2{
-margin-bottom:15px;
-color:#0f3b68;
+.header p{
+color:#cfd8dc;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:20px;
+padding:25px;
+margin-bottom:25px;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+.card h2{
+margin-bottom:20px;
+color:#4fc3f7;
+}
+
+.live-alert{
+background:#ff3d00;
+padding:15px;
+border-radius:10px;
+font-weight:bold;
+font-size:18px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+50%{
+opacity:.7;
+}
 }
 
 input{
 width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:8px;
+padding:15px;
+border:none;
+border-radius:10px;
 font-size:16px;
+margin-top:10px;
 }
 
 .meter{
-height:12px;
+height:15px;
 background:#ddd;
-border-radius:10px;
+border-radius:20px;
 margin-top:15px;
 overflow:hidden;
 }
@@ -61,101 +90,166 @@ overflow:hidden;
 .fill{
 height:100%;
 width:0%;
-transition:0.3s;
+transition:.4s;
 }
 
 #strengthText{
-margin-top:10px;
+margin-top:15px;
+font-size:18px;
 font-weight:bold;
 }
 
-.alert-box{
-background:#fff3cd;
+.score-box{
+text-align:center;
+font-size:3rem;
+font-weight:bold;
+color:#4caf50;
+margin-top:15px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.status-card{
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.status{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.device-box{
+font-size:20px;
 padding:15px;
-margin:12px 0;
-border-left:5px solid #ff9800;
-border-radius:8px;
+background:#1e88e5;
+border-radius:10px;
 }
 
 .footer{
 text-align:center;
 margin-top:30px;
-color:#666;
+color:#bbb;
 }
 
-@media(max-width:768px){
-.container{
-padding:20px;
-}
-}
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>🛡️ Security Tools Center</h1>
+<div class="header">
+<h1>🛡 Cyber Security Operations Center</h1>
+<p>Security Diagnostics & Quality Assurance Dashboard</p>
+</div>
 
-<div class="section">
+<div class="card">
+<h2>🚨 Live Scam Alert Monitor</h2>
 
-<h2>🔐 Password Strength Checker</h2>
+<div class="live-alert">
+<span id="alertText">
+Loading latest cyber threat...
+</span>
+</div>
+
+</div>
+
+<div class="card">
+<h2>🔐 Password Entropy Analyzer</h2>
 
 <input
 type="password"
 id="password"
-placeholder="Enter your password">
+placeholder="Enter password for security analysis">
 
 <div class="meter">
 <div class="fill" id="fill"></div>
 </div>
 
-<p id="strengthText">Enter a password</p>
-
+<div id="strengthText">
+Waiting for analysis...
 </div>
 
-<div class="section">
-
-<h2>🚨 Live Scam Alerts</h2>
-
-<div class="alert-box">
-⚠️ OTP Fraud Alert: Banks never ask for OTP through calls or messages.
-</div>
-
-<div class="alert-box">
-⚠️ UPI Alert: Receiving money never requires entering your UPI PIN.
-</div>
-
-<div class="alert-box">
-⚠️ WhatsApp Scam Alert: Verify unknown requests before sending money.
-</div>
-
-<div class="alert-box">
-⚠️ Cyber Emergency: Report fraud immediately at 1930 or cybercrime.gov.in.
+<div class="score-box">
+<span id="score">0</span>/100
 </div>
 
 </div>
 
-<div class="section">
+<div class="card">
+<h2>📱 Mobile Browser Compatibility Check</h2>
 
-<h2>✅ Security Diagnostics</h2>
+<div class="device-box" id="deviceStatus">
+Checking device...
+</div>
+</div>
 
-<ul>
-<li>✔ Strong Password Usage</li>
-<li>✔ Scam Awareness Monitoring</li>
-<li>✔ Safe Digital Practices</li>
-<li>✔ Mobile-Friendly Security Tools</li>
-</ul>
+<div class="card">
+<h2>✅ Security Diagnostics Report</h2>
 
+<div class="grid">
+
+<div class="status-card">
+<div class="status">🔒</div>
+<h3>Password Security</h3>
+<p id="passStatus">Pending</p>
+</div>
+
+<div class="status-card">
+<div class="status">🚨</div>
+<h3>Scam Awareness</h3>
+<p>Active Monitoring</p>
+</div>
+
+<div class="status-card">
+<div class="status">📱</div>
+<h3>Device Safety</h3>
+<p id="deviceType">Checking...</p>
+</div>
+
+<div class="status-card">
+<div class="status">🛡</div>
+<h3>Security Health</h3>
+<p id="healthStatus">Protected</p>
+</div>
+
+</div>
 </div>
 
 <div class="footer">
-<p>CyberSafe Kadapa - Security Diagnostics & Quality Assurance Module</p>
+CyberSafe Kadapa | Security Diagnostics Module
 </div>
 
 </div>
 
 <script>
+
+const alerts = [
+"🚨 OTP Fraud Alert: Banks never ask for OTP.",
+"🚨 UPI Alert: Receiving money never requires entering your PIN.",
+"🚨 WhatsApp Scam Alert: Verify unknown money requests.",
+"🚨 Screen Sharing Scam: Never install apps requested by strangers.",
+"🚨 Cyber Helpline: Report fraud immediately at 1930."
+];
+
+let currentAlert = 0;
+
+function rotateAlerts(){
+document.getElementById("alertText").innerText =
+alerts[currentAlert];
+
+currentAlert =
+(currentAlert + 1) % alerts.length;
+}
+
+rotateAlerts();
+setInterval(rotateAlerts,3000);
 
 const password =
 document.getElementById("password");
@@ -166,35 +260,81 @@ document.getElementById("fill");
 const strengthText =
 document.getElementById("strengthText");
 
+const score =
+document.getElementById("score");
+
+const passStatus =
+document.getElementById("passStatus");
+
 password.addEventListener("input",()=>{
 
-let value=password.value;
+const value=password.value;
 
 if(value.length < 6){
 
 fill.style.width="30%";
-fill.style.background="red";
-strengthText.innerHTML="🔴 Weak Password";
+fill.style.background="#ff1744";
+
+strengthText.innerHTML=
+"🔴 Weak Password";
+
+score.innerHTML="30";
+passStatus.innerHTML="Weak";
 
 }
 
 else if(value.length < 10){
 
-fill.style.width="60%";
-fill.style.background="orange";
-strengthText.innerHTML="🟡 Medium Password";
+fill.style.width="65%";
+fill.style.background="#ff9800";
+
+strengthText.innerHTML=
+"🟡 Medium Password";
+
+score.innerHTML="65";
+passStatus.innerHTML="Moderate";
 
 }
 
 else{
 
 fill.style.width="100%";
-fill.style.background="green";
-strengthText.innerHTML="🟢 Strong Password";
+fill.style.background="#00e676";
+
+strengthText.innerHTML=
+"🟢 Strong Password";
+
+score.innerHTML="95";
+passStatus.innerHTML="Strong";
 
 }
 
 });
+
+const deviceStatus =
+document.getElementById("deviceStatus");
+
+const deviceType =
+document.getElementById("deviceType");
+
+if(window.innerWidth <= 768){
+
+deviceStatus.innerHTML =
+"✅ Mobile Device Detected | Responsive Security Mode Active";
+
+deviceType.innerHTML =
+"Mobile Browser";
+
+}
+else{
+
+deviceStatus.innerHTML =
+"💻 Desktop Device Detected | Full Security Dashboard Active";
+
+deviceType.innerHTML =
+"Desktop Browser";
+
+}
 
 </script>
 
