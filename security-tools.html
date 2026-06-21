@@ -120,6 +120,15 @@ button{
     margin-bottom:25px;
     box-shadow:0 0 15px rgba(0,0,0,0.3);
 }
+    button:hover{
+    transform:translateY(-2px);
+    transition:0.3s;
+}
+
+.output-box,
+.help-box{
+    word-break:break-word;
+}
 </style>
 </head>
 
@@ -214,7 +223,7 @@ button{
         Select an incident above.
     </div>
 </div>
-</div></div>
+</div>
 <script>
 
 // PASSWORD ENTROPY ENGINE
@@ -301,15 +310,21 @@ if(link===""){
 
 if(link.startsWith("https://")){
 
-    result.innerHTML =
-    "✅ Secure HTTPS connection detected.";
+ result.innerHTML = `
+<h3 style="color:#00ff99;">✅ SAFE LINK</h3>
 
-}
+Protocol: HTTPS<br>
+Status: Secure Connection Detected<br>
+Recommendation: Verify sender before opening.
+`;
 else if(link.startsWith("http://")){
+result.innerHTML = `
+<h3 style="color:#ff4444;">🚨 RISK DETECTED</h3>
 
-    result.innerHTML =
-    "🚨 Warning: HTTP connection is not secure.";
-
+Protocol: HTTP<br>
+Risk Level: High<br>
+Avoid entering passwords or banking details.
+`;
 }
 else{
 
@@ -348,6 +363,8 @@ help.innerHTML=`
 ✅ Step 4: Change banking password.<br>
 ✅ Step 5: File complaint at cybercrime.gov.in
 `;
+
+}
 
 else if(type==="money"){
 
