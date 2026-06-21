@@ -182,7 +182,10 @@ button {
 
 <script>
 
-/* ENTROPY ENGINE */
+/* SYSTEM STATE */
+let systemState = "IDLE";
+
+/* PASSWORD ENGINE (LIVE SYSTEM) */
 function entropy() {
   const p = document.getElementById("pwd").value;
   const fill = document.getElementById("fill");
@@ -198,64 +201,89 @@ function entropy() {
   fill.style.width = s + "%";
 
   if (s < 40) {
+    systemState = "THREAT";
     fill.style.background = "red";
-    risk.innerText = "Risk: HIGH";
-    risk.style.color = "red";
-  } else if (s < 80) {
+    risk.innerText = "⚠ HIGH RISK PASSWORD DETECTED";
+    triggerThreat("Weak credential detected in input layer");
+  }
+  else if (s < 80) {
+    systemState = "WARNING";
     fill.style.background = "orange";
-    risk.innerText = "Risk: MEDIUM";
-    risk.style.color = "orange";
-  } else {
+    risk.innerText = "🟡 MEDIUM SECURITY LEVEL";
+  }
+  else {
+    systemState = "SAFE";
     fill.style.background = "limegreen";
-    risk.innerText = "Risk: LOW";
-    risk.style.color = "limegreen";
+    risk.innerText = "🟢 STRONG SECURITY PROFILE";
   }
 }
 
-/* LIVE AUTO STREAM */
+/* LIVE SCAM ENGINE (AUTO MODE) */
 const threats = [
-  "Phishing attack detected",
-  "OTP fraud attempt blocked",
-  "Suspicious login pattern",
-  "Malware domain blocked",
-  "Fake banking SMS detected"
+  "Phishing SMS pattern detected",
+  "OTP interception attempt blocked",
+  "Suspicious login anomaly detected",
+  "Malware URL quarantined",
+  "Fake banking app signature found"
 ];
 
 function startStream() {
   const stream = document.getElementById("stream");
 
   setInterval(() => {
-    const div = document.createElement("div");
-    div.className = "msg";
-    div.innerText = "🚨 " + threats[Math.floor(Math.random()*threats.length)];
-    stream.prepend(div);
-  }, 1500);
+    const msg = document.createElement("div");
+    msg.className = "msg";
+
+    msg.innerText =
+      "🚨 [" + systemState + "] " +
+      threats[Math.floor(Math.random() * threats.length)];
+
+    stream.prepend(msg);
+
+  }, 2000);
 }
 
-/* QA SCAN */
-function runQA() {
+/* INTELLIGENT THREAT TRIGGER */
+function triggerThreat(text) {
+  const stream = document.getElementById("stream");
+
+  const msg = document.createElement("div");
+  msg.className = "msg";
+
+  msg.innerText = "🚨 CRITICAL: " + text;
+
+  stream.prepend(msg);
+}
+
+/* AUTO QA ENGINE (NO BUTTON NEEDED) */
+window.onload = function runQA() {
   const qa = document.getElementById("qa");
 
   const logs = [
-    "Scanning system modules...",
-    "Checking browser security...",
-    "Analyzing CSS integrity...",
-    "Testing mobile compatibility...",
-    "Threat engine: ACTIVE",
-    "System status: SECURE"
+    "Initializing SOC Engine...",
+    "Loading threat database...",
+    "Checking browser integrity...",
+    "Validating CSS render pipeline...",
+    "Mobile compliance: OK",
+    "System status: ACTIVE"
   ];
 
-  qa.innerHTML = "";
-
   let i = 0;
+
   const interval = setInterval(() => {
-    if (i >= logs.length) return clearInterval(interval);
-    qa.innerHTML += logs[i] + "<br>";
+    if (i >= logs.length) {
+      clearInterval(interval);
+      return;
+    }
+
+    const line = document.createElement("div");
+    line.innerText = logs[i];
+    qa.appendChild(line);
+
     i++;
   }, 500);
-}
+};
 
 </script>
-
 </body>
 </html>
