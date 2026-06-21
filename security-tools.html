@@ -82,6 +82,44 @@ button{
     background:#1a1020;
     border-left:4px solid red;
 }
+    select{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #1f4f88;
+    background:#08172e;
+    color:white;
+}
+
+.output-box{
+    margin-top:15px;
+    padding:15px;
+    background:#08172e;
+    border:1px solid #1f4f88;
+    border-radius:10px;
+    line-height:1.8;
+    min-height:80px;
+    color:#d7e7f7;
+}
+
+.help-box{
+    margin-top:15px;
+    padding:15px;
+    background:#08172e;
+    border-left:4px solid #25a8ff;
+    border-radius:10px;
+    line-height:1.8;
+    color:#d7e7f7;
+}
+
+.card{
+    background:#06162f;
+    border:1px solid #10467c;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
 </style>
 </head>
 
@@ -130,7 +168,6 @@ button{
     <p><b>Network Status:</b> <span id="network"></span></p>
 </div>
 
-</div>
     <!-- LINK SAFETY CHECKER -->
 <div class="card">
     <h2>🔗 LINK SAFETY CHECKER</h2>
@@ -146,7 +183,7 @@ button{
         Analyze Link
     </button>
 
-    <div id="linkResult" style="margin-top:15px;">
+    <div id="linkResult" class="output-box">
         Waiting for analysis...
     </div>
 </div>
@@ -173,11 +210,11 @@ button{
         Get Emergency Steps
     </button>
 
-    <div id="helpBox" style="margin-top:15px;">
+    <div id="helpBox" class="help-box">
         Select an incident above.
     </div>
 </div>
-
+</div></div>
 <script>
 
 // PASSWORD ENTROPY ENGINE
@@ -303,14 +340,14 @@ document.getElementById("helpBox");
 if(type==="otp"){
 
 help.innerHTML=`
-<b>🚨 OTP Shared</b><br><br>
-1. Call your bank immediately.<br>
-2. Call Cyber Helpline 1930.<br>
-3. Block UPI services.<br>
-4. Change banking password.<br>
-5. File complaint at cybercrime.gov.in
+<h3 style="color:#ffcc00;">🚨 OTP Shared Emergency</h3>
+
+✅ Step 1: Call your bank immediately.<br>
+✅ Step 2: Call Cyber Helpline 1930.<br>
+✅ Step 3: Block UPI services.<br>
+✅ Step 4: Change banking password.<br>
+✅ Step 5: File complaint at cybercrime.gov.in
 `;
-}
 
 else if(type==="money"){
 
