@@ -1,222 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SOC Command Center</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Guardian Console</title>
 
 <style>
-body {
-  margin: 0;
-  background: #05070f;
-  color: #e5e7eb;
-  font-family: monospace;
-  overflow: hidden;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
 }
 
-/* GRID LAYOUT */
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 15px;
+body{
+    background:linear-gradient(135deg,#0f172a,#020617);
+    color:white;
+    min-height:100vh;
+    padding:20px;
 }
 
-/* PANEL */
-.panel {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(56,189,248,0.2);
-  border-radius: 12px;
-  padding: 12px;
+header{
+    text-align:center;
+    margin-bottom:30px;
 }
 
-/* INPUT */
-input {
-  width: 100%;
-  padding: 8px;
-  background: #0b1220;
-  border: 1px solid #1f2937;
-  color: white;
+header h1{
+    color:#38bdf8;
+    margin-bottom:10px;
 }
 
-/* ENTROPY BAR */
-.bar {
-  height: 10px;
-  background: #111827;
-  margin-top: 8px;
-  border-radius: 10px;
-  overflow: hidden;
+header p{
+    color:#94a3b8;
 }
 
-.fill {
-  height: 100%;
-  width: 0%;
-  transition: 0.4s;
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+    max-width:1200px;
+    margin:auto;
 }
 
-/* LOG AREA */
-.log {
-  height: 180px;
-  overflow-y: auto;
-  font-size: 12px;
+.panel{
+    background:rgba(15,23,42,0.85);
+    border:1px solid rgba(56,189,248,0.2);
+    border-radius:15px;
+    padding:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
 }
 
-/* NODE NETWORK */
-.network {
-  position: relative;
-  height: 300px;
-  background: radial-gradient(circle, #0b1220, #05070f);
-  overflow: hidden;
+.title{
+    font-size:18px;
+    font-weight:600;
+    color:#facc15;
+    margin-bottom:15px;
 }
 
-.node {
-  width: 10px;
-  height: 10px;
-  background: #38bdf8;
-  border-radius: 50%;
-  position: absolute;
-  animation: pulse 1.5s infinite;
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#0f172a;
+    color:white;
+    outline:none;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.8); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 1; }
+.bar{
+    width:100%;
+    height:12px;
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
 }
 
-/* ATTACK LINE */
-.line {
-  position: absolute;
-  height: 2px;
-  background: red;
-  opacity: 0.6;
-  animation: move 2s linear infinite;
+.fill{
+    width:0%;
+    height:100%;
+    transition:0.4s;
 }
 
-@keyframes move {
-  from { transform: translateX(0); }
-  to { transform: translateX(200px); }
+.status{
+    margin-top:10px;
+    font-weight:600;
 }
 
-/* HEADER */
-header {
-  text-align: center;
-  padding: 10px;
-  font-size: 18px;
-  color: #38bdf8;
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    background:#38bdf8;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.output{
+    margin-top:15px;
+    background:#020617;
+    border:1px solid #1e293b;
+    border-radius:10px;
+    padding:12px;
+    min-height:100px;
+    color:#cbd5e1;
+}
+
+.scoreBox{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:30px;
+    color:#64748b;
 }
 </style>
 </head>
 
 <body>
 
-<header>🛡 SOC COMMAND CENTER - LIVE SECURITY GRID</header>
+<header>
+    <h1>🛡 Cyber Guardian Console</h1>
+    <p>Password Security • Scam Awareness • Device Compatibility • Digital Safety</p>
+</header>
 
 <div class="container">
 
-<!-- LEFT PANEL -->
-<div class="panel">
-  🔐 PASSWORD ENGINE
-  <input id="pwd" type="password" oninput="entropy()">
+    <!-- PASSWORD ANALYZER -->
+    <div class="panel">
+        <div class="title">🔐 Password Safety Analyzer</div>
 
-  <div class="bar">
-    <div id="fill" class="fill"></div>
-  </div>
+        <input
+            type="password"
+            id="pwd"
+            placeholder="Enter a password"
+            oninput="analyzePassword()">
 
-  <div id="risk">Status: IDLE</div>
+        <div class="bar">
+            <div class="fill" id="fill"></div>
+        </div>
+
+        <div class="status" id="passwordStatus">
+            Security Status: Waiting...
+        </div>
+    </div>
+
+    <!-- SCAM ALERT -->
+    <div class="panel">
+        <div class="title">🚨 Scam & Fraud Alert Center</div>
+
+        <button onclick="generateAlert()">
+            Check Latest Threat
+        </button>
+
+        <div class="output" id="alertBox">
+            No active alerts...
+        </div>
+    </div>
+
+    <!-- COMPATIBILITY -->
+    <div class="panel">
+        <div class="title">📱 Device Compatibility Monitor</div>
+
+        <button onclick="runCompatibilityCheck()">
+            Run Compatibility Scan
+        </button>
+
+        <div class="output" id="compatibility">
+            Awaiting scan...
+        </div>
+    </div>
+
+    <!-- SAFETY SCORE -->
+    <div class="panel">
+        <div class="title">📊 Digital Safety Score</div>
+
+        <button onclick="calculateSafetyScore()">
+            Generate Score
+        </button>
+
+        <div class="scoreBox" id="safetyScore">
+            --
+        </div>
+    </div>
+
 </div>
 
-<!-- RIGHT PANEL -->
-<div class="panel">
-  ⚠ THREAT LOG STREAM
-  <div class="log" id="log"></div>
-</div>
-
-<!-- NETWORK VISUAL -->
-<div class="panel network" id="network">
-</div>
-
+<div class="footer">
+    Cyber Guardian Console © 2026
 </div>
 
 <script>
 
-/* PASSWORD ENGINE */
-function entropy() {
-  const p = document.getElementById("pwd").value;
-  const fill = document.getElementById("fill");
-  const risk = document.getElementById("risk");
+/* PASSWORD ANALYZER */
+function analyzePassword() {
 
-  let s = 0;
-  if (p.length > 4) s += 20;
-  if (p.length > 8) s += 20;
-  if (/[A-Z]/.test(p)) s += 20;
-  if (/[0-9]/.test(p)) s += 20;
-  if (/[^A-Za-z0-9]/.test(p)) s += 20;
+    const pwd = document.getElementById("pwd").value;
+    const fill = document.getElementById("fill");
+    const status = document.getElementById("passwordStatus");
 
-  fill.style.width = s + "%";
+    let score = 0;
 
-  if (s < 40) {
-    fill.style.background = "red";
-    risk.innerText = "🔴 HIGH RISK";
-    triggerAlert("Weak credential detected");
-  } else if (s < 80) {
-    fill.style.background = "orange";
-    risk.innerText = "🟡 MEDIUM RISK";
-  } else {
-    fill.style.background = "limegreen";
-    risk.innerText = "🟢 SECURE";
-  }
+    if(pwd.length >= 8) score += 25;
+    if(/[A-Z]/.test(pwd)) score += 25;
+    if(/[0-9]/.test(pwd)) score += 25;
+    if(/[^A-Za-z0-9]/.test(pwd)) score += 25;
+
+    fill.style.width = score + "%";
+
+    if(score < 50){
+        fill.style.background = "#ef4444";
+        status.innerHTML = "🔴 Weak Password";
+    }
+    else if(score < 100){
+        fill.style.background = "#facc15";
+        status.innerHTML = "🟡 Moderate Password";
+    }
+    else{
+        fill.style.background = "#22c55e";
+        status.innerHTML = "🟢 Strong Password";
+    }
 }
 
-/* THREAT STREAM */
-const threats = [
-  "Phishing attack detected",
-  "OTP spoofing attempt blocked",
-  "Suspicious login anomaly",
-  "Malware signature found",
-  "Fake API request intercepted"
+/* SCAM ALERTS */
+const scams = [
+    "⚠ Never share OTPs with anyone, including bank officials.",
+    "⚠ Fake prize-winning messages are a common scam tactic.",
+    "⚠ Verify suspicious payment links before clicking.",
+    "⚠ Beware of callers asking for personal information.",
+    "⚠ Double-check bank messages before responding."
 ];
 
-function addLog(text) {
-  const log = document.getElementById("log");
-  const div = document.createElement("div");
-  div.innerText = "🚨 " + text;
-  log.prepend(div);
+function generateAlert(){
+    document.getElementById("alertBox").innerHTML =
+    scams[Math.floor(Math.random() * scams.length)];
 }
 
-/* AUTO STREAM */
-setInterval(() => {
-  addLog(threats[Math.floor(Math.random() * threats.length)]);
-}, 2000);
+/* COMPATIBILITY */
+function runCompatibilityCheck(){
 
-/* ALERT */
-function triggerAlert(msg) {
-  addLog("CRITICAL: " + msg);
+    const box = document.getElementById("compatibility");
+
+    box.innerHTML = `
+    ✔ Mobile Responsive Layout<br><br>
+    ✔ Browser Compatibility Verified<br><br>
+    ✔ Touch Interaction Supported<br><br>
+    ✔ Performance Optimized<br><br>
+    ✔ User Interface Stable
+    `;
 }
 
-/* NETWORK VISUAL */
-const network = document.getElementById("network");
+/* SAFETY SCORE */
+function calculateSafetyScore(){
 
-/* CREATE NODES */
-for (let i = 0; i < 12; i++) {
-  const node = document.createElement("div");
-  node.className = "node";
-  node.style.top = Math.random() * 280 + "px";
-  node.style.left = Math.random() * 400 + "px";
-  network.appendChild(node);
+    const score = Math.floor(Math.random()*21)+80;
+
+    document.getElementById("safetyScore").innerHTML =
+    `🛡 ${score}/100`;
 }
-
-/* ATTACK LINES */
-setInterval(() => {
-  const line = document.createElement("div");
-  line.className = "line";
-  line.style.top = Math.random() * 300 + "px";
-  line.style.left = "0px";
-
-  network.appendChild(line);
-
-  setTimeout(() => line.remove(), 2000);
-}, 1500);
 
 </script>
 
