@@ -131,6 +131,52 @@ button{
 </div>
 
 </div>
+    <!-- LINK SAFETY CHECKER -->
+<div class="card">
+    <h2>🔗 LINK SAFETY CHECKER</h2>
+
+    <input
+        type="text"
+        id="linkInput"
+        placeholder="Paste WhatsApp or Website Link">
+
+    <br><br>
+
+    <button onclick="checkLink()">
+        Analyze Link
+    </button>
+
+    <div id="linkResult" style="margin-top:15px;">
+        Waiting for analysis...
+    </div>
+</div>
+
+<!-- CYBER EMERGENCY FIRST AID KIT -->
+<div class="card">
+    <h2>🚨 CYBER EMERGENCY FIRST AID KIT</h2>
+
+    <select id="incident"
+    style="width:100%;padding:12px;border-radius:8px;
+    background:#08172e;color:white;border:1px solid #1f4f88;">
+
+        <option value="">Select Incident</option>
+        <option value="otp">😱 I Shared My OTP</option>
+        <option value="money">😱 I Sent Money To A Scammer</option>
+        <option value="link">😱 I Clicked A Suspicious Link</option>
+        <option value="app">😱 I Installed A Fake App</option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="showHelp()">
+        Get Emergency Steps
+    </button>
+
+    <div id="helpBox" style="margin-top:15px;">
+        Select an incident above.
+    </div>
+</div>
 
 <script>
 
@@ -200,6 +246,115 @@ screen.width+" x "+screen.height;
 
 document.getElementById("network").innerText=
 navigator.onLine ? "Online ✅" : "Offline ❌";
+    /* LINK SAFETY CHECKER */
+
+function checkLink(){
+
+let link =
+document.getElementById("linkInput").value;
+
+let result =
+document.getElementById("linkResult");
+
+if(link===""){
+    result.innerHTML =
+    "⚠ Please enter a link.";
+    return;
+}
+
+if(link.startsWith("https://")){
+
+    result.innerHTML =
+    "✅ Secure HTTPS connection detected.";
+
+}
+else if(link.startsWith("http://")){
+
+    result.innerHTML =
+    "🚨 Warning: HTTP connection is not secure.";
+
+}
+else{
+
+    result.innerHTML =
+    "⚠ Suspicious or invalid link format.";
+}
+
+if(
+link.includes("bit.ly") ||
+link.includes("tinyurl") ||
+link.includes("short")
+){
+    result.innerHTML +=
+    "<br><br>🚨 Shortened links can hide malicious websites.";
+}
+}
+
+/* CYBER FIRST AID KIT */
+
+function showHelp(){
+
+let type =
+document.getElementById("incident").value;
+
+let help =
+document.getElementById("helpBox");
+
+if(type==="otp"){
+
+help.innerHTML=`
+<b>🚨 OTP Shared</b><br><br>
+1. Call your bank immediately.<br>
+2. Call Cyber Helpline 1930.<br>
+3. Block UPI services.<br>
+4. Change banking password.<br>
+5. File complaint at cybercrime.gov.in
+`;
+}
+
+else if(type==="money"){
+
+help.innerHTML=`
+<b>🚨 Money Sent To Scammer</b><br><br>
+1. Call 1930 immediately.<br>
+2. Inform your bank.<br>
+3. Freeze suspicious transaction.<br>
+4. Save screenshots.<br>
+5. Report cyber fraud.
+`;
+}
+
+else if(type==="link"){
+
+help.innerHTML=`
+<b>🚨 Suspicious Link Clicked</b><br><br>
+1. Disconnect internet.<br>
+2. Change passwords.<br>
+3. Run antivirus scan.<br>
+4. Check banking apps.<br>
+5. Monitor activity.
+`;
+}
+
+else if(type==="app"){
+
+help.innerHTML=`
+<b>🚨 Fake App Installed</b><br><br>
+1. Uninstall app immediately.<br>
+2. Change passwords.<br>
+3. Scan device.<br>
+4. Check permissions.<br>
+5. Report malicious app.
+`;
+}
+
+else{
+
+help.innerHTML =
+"⚠ Please select an incident.";
+}
+
+}
 
 </script>
 
