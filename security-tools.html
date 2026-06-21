@@ -140,42 +140,43 @@ button:hover {
 
 <div class="container">
 
-  <!-- PASSWORD ENTROPY -->
-  <div class="panel">
-    <div class="title">🔐 PASSWORD ENTROPY ANALYZER</div>
-    <input id="pwd" placeholder="Enter secure string..." oninput="entropy()"/>
-    
-    <div class="bar">
-      <div id="fill" class="fill"></div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cyber System</title>
+</head>
 
-    <div id="score" style="margin-top:8px;font-size:13px;">
-      Status: Awaiting input...
-    </div>
+<body>
+
+<!-- 🔐 PASSWORD ENTROPY UI -->
+<div>
+  <input id="pwd" type="text" oninput="entropy()" placeholder="Enter password">
+
+  <div style="width:100%;height:10px;background:#222;border-radius:10px;">
+    <div id="fill" style="height:10px;width:0%;background:red;border-radius:10px;"></div>
   </div>
 
-  <!-- LIVE SCAM TRACKER -->
-  <div class="panel">
-    <div class="title">⚠ LIVE SCAM TRACKER</div>
-    <button onclick="addThreat()">Inject Threat Signal</button>
-
-    <div class="stream" id="stream">
-      <div class="msg">System initialized — monitoring global threat feeds...</div>
-    </div>
-  </div>
-
-  <!-- MOBILE BROWSER QA -->
-  <div class="panel">
-    <div class="title">📱 MOBILE BROWSER COMPATIBILITY QA</div>
-    <button onclick="runQA()">Run Compliance Check</button>
-
-    <div class="terminal" id="qa">
-> Waiting for scan...<br>
-    </div>
-  </div>
-
+  <p id="score">Entropy: N/A</p>
 </div>
 
+<hr>
+
+<!-- ⚠ SCAM STREAM -->
+<div>
+  <button onclick="addThreat()">Generate Scam Alert</button>
+  <div id="stream"></div>
+</div>
+
+<hr>
+
+<!-- 🧪 QA SYSTEM -->
+<div>
+  <button onclick="runQA()">Run QA Check</button>
+  <div id="qa"></div>
+</div>
+
+<!-- ✅ YOUR JS GOES HERE (IMPORTANT) -->
 <script>
 
 /* PASSWORD ENTROPY */
@@ -204,6 +205,54 @@ function entropy() {
     score.innerText = "Entropy: HIGH SECURITY";
   }
 }
+
+/* LIVE SCAM STREAM */
+const threats = [
+  "Phishing link detected in SMS gateway",
+  "Fake banking OTP request intercepted",
+  "Suspicious login pattern from unknown device",
+  "Malware URL blocked at DNS level",
+  "Fraud voice call pattern flagged"
+];
+
+function addThreat() {
+  const stream = document.getElementById("stream");
+  const msg = document.createElement("div");
+
+  msg.innerText = "🚨 " + threats[Math.floor(Math.random() * threats.length)];
+  stream.prepend(msg);
+}
+
+/* QA SIMULATION */
+function runQA() {
+  const qa = document.getElementById("qa");
+
+  const logs = [
+    "> Checking viewport responsiveness... OK",
+    "> Testing touch input layers... OK",
+    "> Validating browser rendering engine... OK",
+    "> CSS compatibility check... STABLE",
+    "> Mobile optimization score: 94/100",
+    "> Security headers simulation: PASSED"
+  ];
+
+  qa.innerHTML = "";
+  let i = 0;
+
+  const interval = setInterval(() => {
+    if (i >= logs.length) {
+      clearInterval(interval);
+      return;
+    }
+    qa.innerHTML += logs[i] + "<br>";
+    i++;
+  }, 400);
+}
+
+</script>
+
+</body>
+</html>
 
 /* LIVE SCAM STREAM */
 const threats = [
