@@ -1,167 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cyber Safety Dashboard</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Security Diagnostics Dashboard</title>
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  background: #0f172a;
-  color: #fff;
+  background: #0b1220;
+  color: #e2e8f0;
   padding: 20px;
 }
 
-h1 {
+header {
   text-align: center;
-  margin-bottom: 20px;
-  color: #38bdf8;
+  margin-bottom: 25px;
 }
 
-.container {
+header h1 {
+  color: #38bdf8;
+  font-size: 28px;
+}
+
+header p {
+  color: #94a3b8;
+}
+
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
+/* CARD */
 .card {
-  background: #1e293b;
-  padding: 20px;
+  background: #111827;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: 0.3s;
+  padding: 18px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-h2 {
-  margin-bottom: 10px;
+/* HEADINGS */
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
   color: #facc15;
 }
 
-p {
-  margin-bottom: 15px;
-  color: #cbd5e1;
+/* PASSWORD GAUGE */
+.gauge {
+  width: 100%;
+  height: 18px;
+  background: #1f2937;
+  border-radius: 50px;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
+.fill {
+  height: 100%;
+  width: 0%;
+  background: red;
+  transition: 0.5s;
+}
+
+/* BUTTON */
 button {
-  padding: 10px 15px;
-  margin: 5px;
+  margin-top: 10px;
+  padding: 10px 12px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   background: #38bdf8;
   color: black;
   font-weight: bold;
-  transition: 0.3s;
+  cursor: pointer;
 }
 
 button:hover {
   background: #0ea5e9;
 }
 
-.result {
-  margin-top: 10px;
+/* ALERT FEED */
+.alert-box {
+  height: 180px;
+  overflow-y: auto;
+  background: #0f172a;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.alert {
+  padding: 8px;
+  margin-bottom: 6px;
+  border-left: 4px solid red;
+  background: rgba(255,0,0,0.08);
+}
+
+/* STATUS */
+.status {
   font-weight: bold;
+  margin-top: 8px;
 }
 
-.safe {
-  color: #22c55e;
-}
-
-.danger {
-  color: #ef4444;
-}
-
-.medium {
-  color: #f59e0b;
-}
+.low { color: #22c55e; }
+.medium { color: #facc15; }
+.high { color: #ef4444; }
 </style>
 </head>
 
 <body>
 
-<h1>🛡 Cyber Safety Interactive Dashboard</h1>
+<header>
+  <h1>🛡 Security Diagnostics & QA Dashboard</h1>
+  <p>Real-time Cyber Monitoring System</p>
+</header>
 
-<div class="container">
+<div class="grid">
 
-  <!-- Quiz -->
+  <!-- PASSWORD ENTROPY -->
   <div class="card">
-    <h2>🎯 Cyber Safety Quiz</h2>
-    <p>Should you share your OTP with a bank caller?</p>
-    <button onclick="quizAnswer(false)">No</button>
-    <button onclick="quizAnswer(true)">Yes</button>
-    <div id="quizResult" class="result"></div>
+    <h2>🔐 Password Entropy Gauge</h2>
+    <p>Enter Password:</p>
+    <input id="password" type="text" oninput="checkStrength()" style="width:100%; padding:8px; border-radius:6px; border:none; margin-top:5px;">
+    
+    <div class="gauge">
+      <div id="fill" class="fill"></div>
+    </div>
+
+    <div id="strengthText" class="status">Strength: N/A</div>
   </div>
 
-  <!-- Threat Monitor -->
+  <!-- SCAM ALERT SYSTEM -->
   <div class="card">
-    <h2>⚠ Threat Level Monitor</h2>
-    <p>Check current system safety level</p>
-    <button onclick="checkThreat()">Check Threat Level</button>
-    <div id="threatResult" class="result"></div>
+    <h2>⚠ Live Scam Alert System</h2>
+    <button onclick="generateAlert()">Generate Alert</button>
+
+    <div class="alert-box" id="alertBox">
+      <div class="alert">System initialized... monitoring threats.</div>
+    </div>
   </div>
 
-  <!-- Password Generator -->
+  <!-- SECURITY DIAGNOSTICS -->
   <div class="card">
-    <h2>🔐 Password Generator</h2>
-    <p>Create a strong secure password</p>
-    <button onclick="generatePassword()">Generate Password</button>
-    <div id="passwordResult" class="result"></div>
+    <h2>🧪 Security Diagnostics</h2>
+    <button onclick="runDiagnostics()">Run Diagnostics</button>
+
+    <div id="diagResult" style="margin-top:10px;"></div>
   </div>
 
 </div>
 
 <script>
-// Quiz
-function quizAnswer(isYes) {
-  const result = document.getElementById("quizResult");
 
-  if (isYes) {
-    result.innerHTML = "❌ Wrong! Never share OTP with anyone.";
-    result.className = "result danger";
+/* PASSWORD STRENGTH */
+function checkStrength() {
+  const pass = document.getElementById("password").value;
+  const fill = document.getElementById("fill");
+  const text = document.getElementById("strengthText");
+
+  let score = 0;
+
+  if (pass.length > 5) score += 20;
+  if (pass.length > 8) score += 20;
+  if (/[A-Z]/.test(pass)) score += 20;
+  if (/[0-9]/.test(pass)) score += 20;
+  if (/[@$!%*?&]/.test(pass)) score += 20;
+
+  fill.style.width = score + "%";
+
+  if (score <= 40) {
+    fill.style.background = "red";
+    text.innerHTML = "Strength: Weak";
+    text.className = "status high";
+  } else if (score <= 80) {
+    fill.style.background = "orange";
+    text.innerHTML = "Strength: Medium";
+    text.className = "status medium";
   } else {
-    result.innerHTML = "✅ Correct! OTP should never be shared.";
-    result.className = "result safe";
+    fill.style.background = "limegreen";
+    text.innerHTML = "Strength: Strong";
+    text.className = "status low";
   }
 }
 
-// Threat Level
-function checkThreat() {
-  const result = document.getElementById("threatResult");
-  const levels = ["Low 🟢", "Medium 🟡", "High 🔴"];
-  const index = Math.floor(Math.random() * levels.length);
+/* SCAM ALERT SYSTEM */
+const alerts = [
+  "Suspicious OTP request detected from unknown source!",
+  "Fake banking SMS link flagged by AI filter!",
+  "Phishing email detected with malicious attachment!",
+  "Unusual login attempt blocked successfully!",
+  "Fraud call pattern identified (bank impersonation)."
+];
 
-  let className = "result safe";
-  if (index === 1) className = "result medium";
-  if (index === 2) className = "result danger";
+function generateAlert() {
+  const box = document.getElementById("alertBox");
+  const msg = alerts[Math.floor(Math.random() * alerts.length)];
 
-  result.innerHTML = "Current Threat Level: " + levels[index];
-  result.className = className;
+  const div = document.createElement("div");
+  div.className = "alert";
+  div.innerText = "🚨 " + msg;
+
+  box.prepend(div);
 }
 
-// Password Generator
-function generatePassword() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$!";
-  let password = "";
+/* DIAGNOSTICS */
+function runDiagnostics() {
+  const result = document.getElementById("diagResult");
 
-  for (let i = 0; i < 10; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
+  const checks = [
+    "Firewall Status: ACTIVE 🟢",
+    "Antivirus Engine: UPDATED 🟢",
+    "Network Scan: SAFE 🟢",
+    "Phishing Filter: ENABLED 🟢"
+  ];
 
-  const result = document.getElementById("passwordResult");
-  result.innerHTML = "Generated Password: <br><b>" + password + "</b>";
-  result.className = "result safe";
+  let html = "<ul>";
+  checks.forEach(c => html += "<li>" + c + "</li>");
+  html += "</ul>";
+
+  result.innerHTML = html;
 }
+
 </script>
 
 </body>
