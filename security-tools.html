@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cyber Security QA System</title>
+<title>Cyber Security QA Engine</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
@@ -13,19 +13,17 @@ body {
   background: radial-gradient(circle at top, #0b1220, #05070f);
   color: #e5e7eb;
   font-family: "Inter", sans-serif;
-  overflow-x: hidden;
 }
 
 /* HEADER */
 header {
   text-align: center;
-  padding: 30px 15px;
+  padding: 25px;
 }
 
 header h1 {
-  font-size: 26px;
   color: #38bdf8;
-  letter-spacing: 1px;
+  font-size: 26px;
 }
 
 header p {
@@ -33,7 +31,7 @@ header p {
   font-size: 13px;
 }
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 .container {
   width: 92%;
   max-width: 1100px;
@@ -42,20 +40,19 @@ header p {
   gap: 18px;
 }
 
-/* GLASS PANEL */
+/* PANEL */
 .panel {
   background: rgba(15, 23, 42, 0.65);
   border: 1px solid rgba(56, 189, 248, 0.15);
   backdrop-filter: blur(10px);
   border-radius: 14px;
   padding: 18px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
+/* TITLE */
 .title {
-  font-size: 14px;
   color: #facc15;
-  letter-spacing: 1px;
+  font-size: 13px;
   margin-bottom: 10px;
 }
 
@@ -67,7 +64,6 @@ input {
   border: 1px solid #1f2937;
   background: #0b1220;
   color: white;
-  outline: none;
 }
 
 /* GAUGE */
@@ -76,18 +72,18 @@ input {
   height: 14px;
   background: #111827;
   border-radius: 50px;
-  margin-top: 10px;
   overflow: hidden;
+  margin-top: 10px;
 }
 
 .fill {
   height: 100%;
   width: 0%;
-  transition: 0.5s;
+  transition: 0.4s;
   background: red;
 }
 
-/* LIVE STREAM */
+/* STREAM */
 .stream {
   height: 180px;
   overflow-y: auto;
@@ -101,7 +97,7 @@ input {
   background: rgba(239,68,68,0.07);
 }
 
-/* TERMINAL STYLE */
+/* TERMINAL */
 .terminal {
   font-family: monospace;
   font-size: 12px;
@@ -116,17 +112,13 @@ input {
 /* BUTTON */
 button {
   margin-top: 10px;
-  padding: 10px 12px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
   background: linear-gradient(90deg, #38bdf8, #0ea5e9);
   color: black;
   font-weight: bold;
   cursor: pointer;
-}
-
-button:hover {
-  transform: scale(1.03);
 }
 </style>
 </head>
@@ -135,48 +127,44 @@ button:hover {
 
 <header>
   <h1>🛡 Cyber Security QA Engine</h1>
-  <p>Entropy Analysis • Threat Stream • Mobile Browser Compliance</p>
+  <p>Entropy Analysis • Live Threat Stream • QA Diagnostics</p>
 </header>
 
 <div class="container">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Cyber System</title>
-</head>
+<!-- 🔐 PASSWORD ENTROPY -->
+<div class="panel">
+  <div class="title">🔐 PASSWORD ENTROPY ENGINE</div>
 
-<body>
+  <input id="pwd" type="text" oninput="entropy()" placeholder="Enter secure key">
 
-<!-- 🔐 PASSWORD ENTROPY UI -->
-<div>
-  <input id="pwd" type="text" oninput="entropy()" placeholder="Enter password">
-
-  <div style="width:100%;height:10px;background:#222;border-radius:10px;">
-    <div id="fill" style="height:10px;width:0%;background:red;border-radius:10px;"></div>
+  <div class="bar">
+    <div id="fill" class="fill"></div>
   </div>
 
   <p id="score">Entropy: N/A</p>
 </div>
 
-<hr>
+<!-- ⚠ LIVE SCAM STREAM -->
+<div class="panel">
+  <div class="title">⚠ LIVE SCAM INTELLIGENCE STREAM</div>
 
-<!-- ⚠ SCAM STREAM -->
-<div>
-  <button onclick="addThreat()">Generate Scam Alert</button>
-  <div id="stream"></div>
+  <button onclick="addThreat()">Inject Threat Signal</button>
+  <div class="stream" id="stream">
+    <div class="msg">System online — monitoring cyber threats...</div>
+  </div>
 </div>
-
-<hr>
 
 <!-- 🧪 QA SYSTEM -->
-<div>
-  <button onclick="runQA()">Run QA Check</button>
-  <div id="qa"></div>
+<div class="panel">
+  <div class="title">🧪 MOBILE & BROWSER QA ENGINE</div>
+
+  <button onclick="runQA()">Run System Check</button>
+  <div class="terminal" id="qa">> Awaiting scan...</div>
 </div>
 
-<!-- ✅ YOUR JS GOES HERE (IMPORTANT) -->
+</div>
+
 <script>
 
 /* PASSWORD ENTROPY */
@@ -210,57 +198,9 @@ function entropy() {
 const threats = [
   "Phishing link detected in SMS gateway",
   "Fake banking OTP request intercepted",
-  "Suspicious login pattern from unknown device",
+  "Suspicious login pattern detected",
   "Malware URL blocked at DNS level",
-  "Fraud voice call pattern flagged"
-];
-
-function addThreat() {
-  const stream = document.getElementById("stream");
-  const msg = document.createElement("div");
-
-  msg.innerText = "🚨 " + threats[Math.floor(Math.random() * threats.length)];
-  stream.prepend(msg);
-}
-
-/* QA SIMULATION */
-function runQA() {
-  const qa = document.getElementById("qa");
-
-  const logs = [
-    "> Checking viewport responsiveness... OK",
-    "> Testing touch input layers... OK",
-    "> Validating browser rendering engine... OK",
-    "> CSS compatibility check... STABLE",
-    "> Mobile optimization score: 94/100",
-    "> Security headers simulation: PASSED"
-  ];
-
-  qa.innerHTML = "";
-  let i = 0;
-
-  const interval = setInterval(() => {
-    if (i >= logs.length) {
-      clearInterval(interval);
-      return;
-    }
-    qa.innerHTML += logs[i] + "<br>";
-    i++;
-  }, 400);
-}
-
-</script>
-
-</body>
-</html>
-
-/* LIVE SCAM STREAM */
-const threats = [
-  "Phishing link detected in SMS gateway",
-  "Fake banking OTP request intercepted",
-  "Suspicious login pattern from unknown device",
-  "Malware URL blocked at DNS level",
-  "Fraud voice call pattern flagged"
+  "Fraud call pattern flagged in network"
 ];
 
 function addThreat() {
@@ -273,17 +213,17 @@ function addThreat() {
   stream.prepend(msg);
 }
 
-/* QA SIMULATION */
+/* QA SYSTEM */
 function runQA() {
   const qa = document.getElementById("qa");
 
   const logs = [
     "> Checking viewport responsiveness... OK",
     "> Testing touch input layers... OK",
-    "> Validating browser rendering engine... OK",
-    "> Checking CSS compatibility... STABLE",
-    "> Mobile optimization score: 94/100",
-    "> Security headers simulation: PASSED"
+    "> Browser rendering engine stable... OK",
+    "> CSS compatibility verified... STABLE",
+    "> Mobile score: 94/100",
+    "> Security headers: PASSED"
   ];
 
   qa.innerHTML = "";
