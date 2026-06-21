@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Quiz - CyberSafe Kadapa</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+.quiz-container{
+    max-width:800px;
+    margin:50px auto;
+    padding:30px;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.quiz-container h1{
+    margin-bottom:10px;
+}
+
+.quiz-container p{
+    margin-bottom:25px;
+}
+
+.option{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    background:#0f3b68;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.option:hover{
+    background:#174f89;
+}
+
+.result-box{
+    display:none;
+}
+
+.badge{
+    font-size:40px;
+    margin-top:15px;
+}
+
+.retry-btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#0f3b68;
+    color:white;
+    cursor:pointer;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🛡️</span>
+        <span class="brand-text">
+            <strong>CyberSafe Kadapa</strong>
+            <small>Digital Safety Awareness Portal</small>
+        </span>
+    </a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+        <a href="awareness.html">Common Scams</a>
+        <a href="quiz.html" class="active">Cyber Quiz</a>
+    </nav>
+</header>
+
+<div class="quiz-container">
+
+    <h1>🧠 Cyber Awareness Quiz</h1>
+    <p>Test your cyber safety knowledge and earn a badge!</p>
+
+    <div id="quiz-box">
+        <h2 id="question"></h2>
+
+        <button class="option" onclick="checkAnswer(this)"></button>
+        <button class="option" onclick="checkAnswer(this)"></button>
+        <button class="option" onclick="checkAnswer(this)"></button>
+        <button class="option" onclick="checkAnswer(this)"></button>
+    </div>
+
+    <div id="result" class="result-box">
+        <h2 id="score"></h2>
+        <div class="badge" id="badge"></div>
+        <button class="retry-btn" onclick="restartQuiz()">Try Again</button>
+    </div>
+
+</div>
+
+<script>
+
+const quizData = [
+{
+question:"Should you share your OTP with anyone?",
+options:["Yes","No","Only Bank Staff","Friends"],
+answer:"No"
+},
+{
+question:"Receiving money through UPI requires?",
+options:["PIN","OTP","Nothing","Password"],
+answer:"Nothing"
+},
+{
+question:"What should you do if a stranger asks for money on WhatsApp?",
+options:["Send immediately","Verify first","Share OTP","Ignore warning"],
+answer:"Verify first"
+},
+{
+question:"Which password is strongest?",
+options:["123456","password","MyName","A@7kP#92x"],
+answer:"A@7kP#92x"
+},
+{
+question:"What should you do after identifying a scam?",
+options:["Ignore it","Share OTP","Report it","Forward it"],
+answer:"Report it"
+}
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.querySelectorAll(".option");
+
+function loadQuestion(){
+
+let q = quizData[currentQuestion];
+
+questionEl.innerText = q.question;
+
+optionsEl.forEach((btn,index)=>{
+btn.innerText = q.options[index];
+});
+}
+
+function checkAnswer(btn){
+
+if(btn.innerText === quizData[currentQuestion].answer){
+score++;
+}
+
+currentQuestion++;
+
+if(currentQuestion < quizData.length){
+loadQuestion();
+}else{
+showResult();
+}
+}
+
+function showResult(){
+
+document.getElementById("quiz-box").style.display="none";
+document.getElementById("result").style.display="block";
+
+document.getElementById("score").innerHTML =
+`Your Score: ${score}/${quizData.length}`;
+
+let badge="🥉 Cyber Beginner";
+
+if(score === 5){
+badge="🏆 Cyber Security Expert";
+}
+else if(score >= 3){
+badge="🥈 Cyber Awareness Champion";
+}
+
+document.getElementById("badge").innerHTML = badge;
+}
+
+function restartQuiz(){
+
+currentQuestion=0;
+score=0;
+
+document.getElementById("quiz-box").style.display="block";
+document.getElementById("result").style.display="none";
+
+loadQuestion();
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
